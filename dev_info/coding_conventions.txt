@@ -1,0 +1,115 @@
+============================================================
+           EATEN-BACKEND CODING CONVENTIONS
+============================================================
+
+Project Stack: FastAPI + Supabase (PostgreSQL)
+Purpose: Maintain consistent, clean, and professional code style
+============================================================
+
+
+1. NAMING CONVENTIONS
+------------------------------------------------------------
+Variables:        snake_case        -> user_id, coffee_name
+Functions:        snake_case        -> get_user_by_id(), create_order()
+Classes:          PascalCase        -> UserModel, OrderService
+Constants:        UPPER_CASE        -> JWT_SECRET_KEY, DEFAULT_ROLE
+Files/Modules:    snake_case        -> auth_service.py, meal_repository.py
+Folders:          lowercase         -> models/, schemas/, api/
+Env Variables:    UPPER_CASE        -> DATABASE_URL, ACCESS_TOKEN_EXPIRE_MINUTES
+DB Tables:        snake_case_plural -> users, coffee_orders
+DB Columns:       snake_case        -> created_at, order_status
+Pydantic Models:  PascalCase        -> UserSchema, OrderCreate
+API Endpoints:    kebab-case URLs   -> /api/v1/create-order, /api/v1/validate-meal
+Enums:            PascalCase + UPPER_CASE members -> OrderStatus.PENDING
+
+
+2. CODE STYLE
+------------------------------------------------------------
+- Use 4 spaces for indentation (no tabs)
+- Max line length: 100 characters
+- Always use type hints
+  Example: def create_order(user_id: str, quantity: int) -> Order:
+- Add a newline at the end of every file
+- Group imports in this order:
+    1. Standard Library
+    2. Third Party Libraries
+    3. Local Imports
+- Avoid commented-out or unused code
+
+
+3. COMMENTING GUIDELINES
+------------------------------------------------------------
+Inline Comments:
+    - Write short, clear comments above the line of code.
+    - Avoid redundant comments.
+
+Example:
+    # Validate that user has not already claimed this meal
+    if claim_repo.has_claim(user_id, meal_id):
+        raise AlreadyClaimedError()
+
+Function Docstrings:
+    - Use triple quotes for docstrings
+    - Describe purpose, arguments, and returns
+
+Example:
+    def create_order(user_id: str, coffee_name: str, quantity: int):
+        """
+        Create a coffee order for a user.
+
+        Args:
+            user_id (str): ID of the user placing the order.
+            coffee_name (str): Type of coffee ordered.
+            quantity (int): Number of cups.
+
+        Returns:
+            Order: The created order object.
+        """
+
+File Headers:
+    - Add a short header at the top of important files
+      Example:
+        """
+        meal_service.py
+        Handles business logic for meal creation, retrieval, and validation.
+        """
+
+
+4. GIT COMMIT CONVENTIONS
+------------------------------------------------------------
+Format:
+    <type>(scope): <short summary>
+
+Examples:
+    feat(auth): add JWT token generation and validation
+    fix(order): correct total price calculation bug
+    chore(deps): update fastapi version
+    docs(readme): add setup instructions
+    refactor(meal): simplify meal validation logic
+    test(claim): add test for duplicate claim handling
+
+Common Commit Types:
+    feat      - New feature
+    fix       - Bug fix
+    refactor  - Code restructure (no new feature)
+    chore     - Maintenance / dependency updates
+    docs      - Documentation updates
+    style     - Code style / formatting (no logic change)
+    test      - Add or update tests
+    perf      - Performance improvement
+
+
+5. COMMENT STYLE PER LAYER
+------------------------------------------------------------
+API Endpoints:  # Describe what the endpoint does
+Services:       # Describe the business rule or validation
+Models/Schemas: # Mention the data purpose or structure
+Utils:          # Explain algorithms or formulas
+
+Examples:
+    # POST /auth/login - Authenticate user and return JWT
+    # Check if user already claimed lunch for this event
+    # Schema for creating a new event entry
+    # Generate QR with embedded user and event ID
+
+
