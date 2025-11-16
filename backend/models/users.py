@@ -13,4 +13,5 @@ class User(Base):
     created_at = Column(DateTime, nullable=False, default=datetime.now)
     updated_at = Column(DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
     qr_code = Column(String(500), nullable=True)
+   
 
