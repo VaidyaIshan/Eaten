@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from db import get_db
 from schemas.auth_schemas import UserRegister, UserLogin, UserResponse
 from services.auth import register_user, login_user
-from services.roles_services import create_roles
+from services.roles_services import create_roles, get_roles
+from models.users import User
 
 router = APIRouter(prefix="/auth")
 
@@ -21,3 +22,6 @@ def login(user_credentials: UserLogin, db: Session = Depends(get_db)):
 def initial_roles(db: Session = Depends(get_db)):
     return create_roles(db)
 
+@router.get("/roles")
+def get_user_roles(username: str, db: Session = Depends(get_db)):
+    return get_roles(username, db)

@@ -1,5 +1,6 @@
 from models.roles import Role
 from sqlalchemy.orm import Session
+from models.users import User
 
 def create_roles(db: Session):
     if db.query(Role).first() is None:
@@ -24,3 +25,10 @@ def create_roles(db: Session):
         except Exception as e:
             db.rollback()
             print(f"Error creating initial roles: {e}")
+
+
+def get_roles(username: str, db: Session):
+    user = db.query(User).filter(User.username == username).first()
+    if not user:
+        return None
+    return user.role
