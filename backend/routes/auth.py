@@ -8,6 +8,7 @@ from models.users import User
 from services.total_users_admins import total_users, total_admins
 from services.update_roles import update_role_id
 from schemas.update_role_schemas import UserRoleUpdate
+from services.user_services import set_is_active
 
 router = APIRouter(prefix="/auth")
 
@@ -44,3 +45,7 @@ def update_user_role_id(user_id: int, new_role_id: int, db: Session = Depends(ge
 @router.delete("/delete/{user_id}")
 def delete_user_data(user_id: int, db: Session = Depends(get_db)):
     return del_user(user_id, db)
+
+@router.put("/users/isActive/{user_id}")
+def change_is_active(user_id: int, db: Session = Depends(get_db)):
+    return set_is_active(user_id, db)
