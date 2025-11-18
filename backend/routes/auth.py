@@ -6,6 +6,8 @@ from services.auth import register_user, login_user
 from services.roles_services import create_roles, get_roles
 from models.users import User
 from services.total_users_admins import total_users, total_admins
+from services.update_roles import update_role_id
+from schemas.update_role_schemas import UserRoleUpdate
 
 router = APIRouter(prefix="/auth")
 
@@ -34,3 +36,7 @@ def get_total_users(db: Session = Depends(get_db)):
 @router.get("/total/admins")
 def get_total_admins(db: Session = Depends(get_db)):
     return total_admins(db)
+
+@router.put("/users/{user_id}", response_model=UserRoleUpdate)
+def update_user_role_id(user_id: int, new_role_id: int, db: Session = Depends(get_db)):
+    return update_role_id(user_id, new_role_id, db)

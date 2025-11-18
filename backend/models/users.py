@@ -10,7 +10,7 @@ class User(Base):
     email = Column(String(255), unique=True, index=True, nullable=True)
     username = Column(String(100), unique=True, index=True, nullable=False)
     hashed_password = Column(String(255), nullable=False)
-    role_id = Column(Integer,ForeignKey("roles.id") ,nullable=False, default=2)
+    role_id = Column(Integer,ForeignKey("roles.id") ,nullable=False, default=2, onupdate=None)
     created_at = Column(DateTime, nullable=False, default=datetime.now)
     updated_at = Column(DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
     qr_code = Column(String(500), nullable=True)
