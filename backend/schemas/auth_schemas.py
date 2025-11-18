@@ -22,6 +22,7 @@ class UserResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
     qr_code: Optional[str] = None
+    is_active: bool
     
     class Config:
         from_attributes = True

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from db import get_db
 from schemas.auth_schemas import UserRegister, UserLogin, UserResponse
-from services.auth import register_user, login_user
+from services.auth import register_user, login_user, del_user
 from services.roles_services import create_roles, get_roles
 from models.users import User
 from services.total_users_admins import total_users, total_admins
@@ -40,3 +40,7 @@ def get_total_admins(db: Session = Depends(get_db)):
 @router.put("/users/{user_id}", response_model=UserRoleUpdate)
 def update_user_role_id(user_id: int, new_role_id: int, db: Session = Depends(get_db)):
     return update_role_id(user_id, new_role_id, db)
+
+@router.delete("/delete/{user_id}")
+def delete_user_data(user_id: int, db: Session = Depends(get_db)):
+    return del_user(user_id, db)

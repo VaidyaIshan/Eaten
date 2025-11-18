@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from db import Base
@@ -14,6 +14,7 @@ class User(Base):
     created_at = Column(DateTime, nullable=False, default=datetime.now)
     updated_at = Column(DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
     qr_code = Column(String(500), nullable=True)
+    is_active = Column(Boolean, nullable=True, default=False)
    
     role = relationship("Role", back_populates="users")
 
