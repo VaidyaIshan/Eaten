@@ -5,6 +5,7 @@ from schemas.auth_schemas import UserRegister, UserLogin, UserResponse
 from services.auth import register_user, login_user
 from services.roles_services import create_roles, get_roles
 from models.users import User
+from services.total_users_admins import total_users, total_admins
 
 router = APIRouter(prefix="/auth")
 
@@ -25,3 +26,11 @@ def initial_roles(db: Session = Depends(get_db)):
 @router.get("/roles")
 def get_user_roles(username: str, db: Session = Depends(get_db)):
     return get_roles(username, db)
+
+@router.get("/total/users")
+def get_total_users(db: Session = Depends(get_db)):
+    return total_users(db)
+
+@router.get("/total/admins")
+def get_total_admins(db: Session = Depends(get_db)):
+    return total_admins(db)
