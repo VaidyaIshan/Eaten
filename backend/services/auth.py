@@ -4,6 +4,8 @@ from datetime import datetime
 from fastapi import HTTPException
 from models.users import User
 from schemas.auth_schemas import UserRegister, UserLogin
+import uuid
+from sqlalchemy.dialects.postgresql import UUID
 
 hasher = CryptContext(schemes=["bcrypt"])
 
@@ -47,7 +49,7 @@ def login_user(user_credentials: UserLogin, db: Session):
     
     return user
 
-def del_user(user_id: int, db: Session):
+def del_user(user_id: uuid.UUID, db: Session):
     user = db.query(User).filter(User.id == user_id).first()
 
     if not user:
