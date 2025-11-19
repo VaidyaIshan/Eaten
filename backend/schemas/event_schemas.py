@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
+from uuid import UUID
 
 class EventRegister(BaseModel):
     name: str
@@ -9,7 +10,7 @@ class EventRegister(BaseModel):
     end_date: datetime
 
 class EventResponse(BaseModel):
-    id: int
+    id: UUID
     name: str
     description: str
     start_date: datetime

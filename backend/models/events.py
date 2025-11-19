@@ -1,11 +1,13 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from datetime import datetime
 from db import Base
+import uuid
+from sqlalchemy.dialects.postgresql import UUID
 
 class Event(Base):
     __tablename__ = "events"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String(100), unique=True, index=True, nullable=False)
     description = Column(String(255), unique=True, nullable=False)
     start_date = Column(DateTime, nullable=False)
