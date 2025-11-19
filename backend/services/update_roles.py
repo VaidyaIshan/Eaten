@@ -2,8 +2,10 @@ from models.users import User
 from models.roles import Role
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
+import uuid
+from sqlalchemy.dialects.postgresql import UUID
 
-def update_role_id(user_id: int, new_role_id: int, db: Session):
+def update_role_id(user_id: uuid.UUID, new_role_id: int, db: Session):
     user = db.query(User).filter(User.id == user_id).first()
 
     if not user:

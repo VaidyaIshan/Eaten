@@ -9,6 +9,8 @@ from services.total_users_admins import total_users, total_admins
 from services.update_roles import update_role_id
 from schemas.update_role_schemas import UserRoleUpdate
 from services.user_services import set_is_active
+import uuid
+from sqlalchemy.dialects.postgresql import UUID
 
 router = APIRouter(prefix="/auth")
 
@@ -39,13 +41,13 @@ def get_total_admins(db: Session = Depends(get_db)):
     return total_admins(db)
 
 @router.put("/users/{user_id}", response_model=UserRoleUpdate)
-def update_user_role_id(user_id: int, new_role_id: int, db: Session = Depends(get_db)):
+def update_user_role_id(user_id: uuid.UUID, new_role_id: int, db: Session = Depends(get_db)):
     return update_role_id(user_id, new_role_id, db)
 
 @router.delete("/delete/{user_id}")
-def delete_user_data(user_id: int, db: Session = Depends(get_db)):
+def delete_user_data(user_id: uuid.UUID, db: Session = Depends(get_db)):
     return del_user(user_id, db)
 
 @router.put("/users/isActive/{user_id}")
-def change_is_active(user_id: int, db: Session = Depends(get_db)):
+def change_is_active(user_id: uuid.UUID, db: Session = Depends(get_db)):
     return set_is_active(user_id, db)
