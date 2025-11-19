@@ -10,6 +10,7 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 # Import your Base and models
 from db import Base
 from models.users import User  # Import all your models here
+from models.roles import Role
 
 # this is the Alembic Config object
 config = context.config
