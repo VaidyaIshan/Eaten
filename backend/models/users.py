@@ -19,4 +19,5 @@ class User(Base):
     is_active = Column(Boolean, nullable=True, default=False)
    
     role = relationship("Role", back_populates="users")
+    feedback = relationship("Feedback", back_populates="users")
 
