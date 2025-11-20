@@ -31,3 +31,14 @@ def create_meal_session(event_name: str, meal_session_data: MealSessionRegister,
     db.refresh(mealsession)
 
     return mealsession
+
+def delete_meal_session(meal_id: uuid.UUID, db: Session):
+    mealsession = db.query(MealSession).filter(MealSession.id == meal_id).first()
+
+    if not mealsession:
+        raise HTTPException(status_code=404, detail="Meal session not found")
+
+    db.delete(mealsession)
+    db.commit()
+
+    return {"message" : "meal session deleted successfully"}
