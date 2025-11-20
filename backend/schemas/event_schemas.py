@@ -8,6 +8,7 @@ class EventRegister(BaseModel):
     description: str
     start_date: date
     end_date: date
+    picture: str
 
 class EventResponse(BaseModel):
     id: UUID
@@ -18,6 +19,7 @@ class EventResponse(BaseModel):
     is_active: bool
     created_at: datetime
     updated_at: datetime
+    picture: str
 
     class Config:
         from_attributes = True
