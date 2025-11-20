@@ -8,6 +8,10 @@ class MealSessionRegister(BaseModel):
     end_time: datetime
     total_capacity: int
 
+class MealSessionUpdate(BaseModel):
+    start_time: datetime
+    end_time: datetime
+
 class MealSessionResponse(BaseModel):
     id: UUID
     event_id: UUID

@@ -3,7 +3,7 @@ from datetime import datetime
 from fastapi import HTTPException
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
-from schemas.meal_sessions_schemas import MealSessionRegister
+from schemas.meal_sessions_schemas import MealSessionRegister, MealSessionUpdate
 from models.events import Event
 from models.meal_sessions import MealSession
 
@@ -42,3 +42,17 @@ def delete_meal_session(meal_id: uuid.UUID, db: Session):
     db.commit()
 
     return {"message" : "meal session deleted successfully"}
+
+def update_meal_session(meal_id: uuid.UUID, new_time: MealSessionUpdate, db: Session):
+    mealsession = db.query(MealSession).filter(MealSession.id == meal_id).first()
+
+    if not mealsession:
+        raise HTTPException(status_code=404, detail="Meal session not found")
+
+    mealsession.start_time = new_time.start_time
+    mealsession.end_time = new_time.end_time
+
+    db.commit()
+    db.refresh(mealsession)
+    
+    return {"message" : "meal session updated successfully"}
