@@ -4,7 +4,6 @@ from uuid import UUID
 from datetime import datetime
 
 class OrderingServiceCreate(BaseModel):
-    user_id:UUID
     event_id: UUID
     service_name: str
     description: Optional[str] = None
@@ -18,21 +17,17 @@ class ServiceItemCreate(BaseModel):
     stock_quantity:Optional[int] = None
     price:Optional[int] = None
 
-class ServiceItemBase(BaseModel):
-    id: UUID
-
-class ServiceItemPriceUpdate(ServiceItemBase):
-    price:int
-
-class ServiceItemQuantityUpdate(ServiceItemBase):
-    quantity:int
+class ServiceItemUpdate(BaseModel):
+    price:Optional[int] = None
+    quantity:Optional[int] = None
+    is_Available: Optional[bool] = None
 
 class OrderBase(BaseModel):
     service_item_id: UUID
     quantity: int = 1
 
 class OrderCreate(OrderBase):
-    user_id: UUID
+    pass
 
 class OrderUpdate(BaseModel):
     status: Optional[str] = None

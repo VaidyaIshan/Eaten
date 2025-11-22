@@ -17,3 +17,4 @@ class Order(Base):
     fulfilled_at = Column(DateTime, nullable=True, default=None)
 
     service_item = relationship("ServiceItem", back_populates="order")
+    user = relationship("User", back_populates="orders")
