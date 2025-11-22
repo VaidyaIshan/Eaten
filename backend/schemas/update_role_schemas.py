@@ -1,9 +1,10 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
+from uuid import UUID
 
 class UserOut(BaseModel):
-    id: int
+    id: UUID
     username: str
     email: Optional[str]
     role_id: int

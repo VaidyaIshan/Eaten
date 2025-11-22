@@ -18,7 +18,8 @@ def register_event(event_data: EventRegister, db: Session):
             end_date = event_data.end_date,
             is_active = False,
             created_at = datetime.now(),
-            updated_at = datetime.now()
+            updated_at = datetime.now(),
+            picture = event_data.picture
             )
 
     db.add(event)

@@ -8,10 +8,10 @@ from sqlalchemy.dialects.postgresql import UUID
 
 router = APIRouter(prefix="/event")
 
-@router.post("/register", response_model=EventResponse)
+@router.post("/", response_model=EventResponse)
 def event_register(event_data: EventRegister, db: Session = Depends(get_db)):
     return register_event(event_data, db)
 
-@router.delete("/delete")
+@router.delete("/{event_id}")
 def event_delete(event_id: uuid.UUID, db: Session = Depends(get_db)):
     return delete_event(event_id, db)
