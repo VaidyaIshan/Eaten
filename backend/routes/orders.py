@@ -3,30 +3,29 @@ from sqlalchemy.orm import Session
 from typing import Annotated
 from db import get_db
 import services.order_services as order_services
-from schemas.ordering_service import OrderCreate,OrderUpdate, OrderingServiceCreate, ServiceItemCreate, ServiceItemPriceUpdate, ServiceItemQuantityUpdate
+from schemas.ordering_service import OrderCreate,OrderResponse,OrderUpdate, OrderingServiceCreate, ServiceItemCreate, ServiceItemPriceUpdate, ServiceItemQuantityUpdate
 import uuid
-from typing import Annotated
+from typing import Annotated, List
 
 router = APIRouter(prefix="/orders")
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
-@router.get("/all")
+@router.get("/all", response_model=List[OrderResponse])
 def get_all_orders(db:db_dependency):
     return order_services.get_all_orders(db)
+
+@router.get("/orderInfo/{order_id}",response_model=OrderResponse)
+def get_order_info(order_id:uuid.UUID, db:db_dependency):
+    return order_services.get_order_info(order_id,db)
 
 @router.post("/create")
 def create_order(OrderCreate :OrderCreate,db:db_dependency):
     return order_services.create_order(db=db,OrderCreate=OrderCreate)
 
 @router.put("/update/{order_id}")
-def update_order_route(
-    order_id: uuid.UUID,
-    data: OrderUpdate,
-    db: db_dependency
-):
+def update_order_route(order_id: uuid.UUID, data: OrderUpdate, db: db_dependency):
     return order_services.update_order(db, order_id, data)
-
 
 @router.post("/createOrderingService")
 def create_ordering_service(OrderingServiceCreate :OrderingServiceCreate,db:db_dependency):

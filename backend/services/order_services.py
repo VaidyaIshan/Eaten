@@ -132,6 +132,13 @@ def update_order(db: Session, order_id: uuid.UUID, data: OrderUpdate):
 
     return order
 
+def get_order_info(order_id:uuid.UUID,db:Session):
+    order = db.query(Order).filter(Order.id==order_id).first()
+    if not order:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order doesnt exist.")
+    
+    return order
+
 
     
 
