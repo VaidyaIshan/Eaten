@@ -6,7 +6,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 class Event(Base):
-    __tablename__ = "events"
+    tablename = "events"
 
     id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String(100), unique=True, index=True, nullable=False)
@@ -16,5 +16,7 @@ class Event(Base):
     is_active = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime, nullable=False, default=datetime.now)
     updated_at = Column(DateTime, nullable=False, default=datetime.now, onupdate=datetime.now)
+    picture = Column(String, nullable=True)
 
+    meal_sessions = relationship("MealSession", back_populates = "event")
     ordering_services = relationship("OrderingService", back_populates="event")
