@@ -10,7 +10,7 @@ class MealSession(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     event_id = Column(UUID(as_uuid=True), ForeignKey("events.id"), nullable=False, onupdate=None)
-    meal_type = Column(String(100), index=True, unique=True , nullable=False)
+    meal_type = Column(String(100), index=True, nullable=False)
     start_time = Column(DateTime, nullable=False)
     end_time = Column(DateTime, nullable=False)
     is_active = Column(Boolean, nullable=False, default=False)
