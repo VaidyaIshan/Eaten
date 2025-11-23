@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from db import get_db
 from schemas.event_schemas import EventRegister, EventResponse
-from services.events import register_event, delete_event
+from services.events import register_event, delete_event, activate_event
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
 
@@ -15,3 +15,7 @@ def event_register(event_data: EventRegister, db: Session = Depends(get_db)):
 @router.delete("/{event_id}")
 def event_delete(event_id: uuid.UUID, db: Session = Depends(get_db)):
     return delete_event(event_id, db)
+
+@router.put("/{event_id}", response_model=EventResponse)
+def event_activate(event_id: uuid.UUID, db: Session = Depends(get_db)):
+    return activate_event(event_id, db)

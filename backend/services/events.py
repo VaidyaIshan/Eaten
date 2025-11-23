@@ -41,3 +41,20 @@ def delete_event(event_id: uuid.UUID, db: Session):
     db.commit()
 
     return {"message" : "event deleted successfully"}
+
+def activate_event(event_id: uuid.UUID, db: Session):
+    event = db.query(Event).filter(Event.id == event_id).first()
+
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+
+    if event.is_active:
+        event.is_active = False
+    else:
+        event.is_active = True
+
+    db.commit()
+    db.refresh(event)
+
+    return event
+
