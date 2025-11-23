@@ -56,3 +56,21 @@ def update_meal_session(meal_id: uuid.UUID, new_time: MealSessionUpdate, db: Ses
     db.refresh(mealsession)
     
     return {"message" : "meal session updated successfully"}
+
+def activate_meal_session(meal_id: uuid.UUID, db: Session):
+    mealsession = db.query(MealSession).filter(MealSession.id == meal_id).first()
+
+    if not mealsession:
+        raise HTTPException(status_code=404, detail="Meal session not found")
+
+    if mealsession.is_active:
+        mealsession.is_active = False
+    else:
+        mealsession.is_active = True
+
+    db.commit()
+    db.refresh(mealsession)
+
+    return {"message" : "meal session updated successfully"} 
+
+
