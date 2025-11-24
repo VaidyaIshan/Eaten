@@ -19,4 +19,4 @@ class MealSession(Base):
     updated_at = Column(DateTime, nullable=False, default = datetime.now, onupdate=datetime.now)
 
     event = relationship("Event", back_populates="meal_sessions")
-
+    food_claims = relationship("FoodClaim", back_populates="meal_sessions")
