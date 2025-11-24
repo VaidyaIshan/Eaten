@@ -15,6 +15,13 @@ def create_food_claim(food_claim_data: FoodClaimCreate, db: Session):
     mealtype = db.query(MealSession).filter(MealSession.meal_type == food_claim_data.meal_type).first()
     event = db.query(Event).filter(Event.name == food_claim_data.event_name).first()
 
+    userIntable = db.query(FoodClaim).filter(FoodClaim.user_id == user.id).first()
+    mealIntable= db.query(FoodClaim).filter(FoodClaim.meal_session_id == mealtype.id).first()
+    eventIntable = db.query(FoodClaim).filter(FoodClaim.event_id == event.id).first()
+
+    if userIntable and mealIntable and eventIntable:
+        raise HTTPException(status_code=409, detail="Food claim already exists")
+
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
