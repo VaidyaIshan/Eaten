@@ -19,4 +19,4 @@ class Event(Base):
     picture = Column(String, nullable=True)
 
     meal_sessions = relationship("MealSession", back_populates = "event")
-    food_claims = relationship("FoodClaim", back_populates = "events")
+    ordering_services = relationship("OrderingService", back_populates="event")
