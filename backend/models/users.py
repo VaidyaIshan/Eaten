@@ -22,3 +22,4 @@ class User(Base):
     feedback = relationship("Feedback", back_populates="users")
     orders = relationship("Order", back_populates="user")
     food_claims = relationship("FoodClaim", back_populates="users")
+    event_participants = relationship("EventParticipant", back_populates="user")

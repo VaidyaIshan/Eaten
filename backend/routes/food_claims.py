@@ -5,6 +5,7 @@ from services.food_claims import create_food_claim, activate_food_claim, delete_
 from schemas.food_claims import FoodClaimCreate, FoodClaimResponse
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
+from services.qr_system import get_qr_string
 
 router = APIRouter(prefix="/food-claim")
 
@@ -19,3 +20,7 @@ def food_claim_activate(food_claim_id: uuid.UUID, db:Session = Depends(get_db)):
 @router.delete("/{food_claim_id}")
 def food_claim_delete(food_claim_id: uuid.UUID, db: Session = Depends(get_db)):
     return delete_food_claim(food_claim_id, db)
+
+@router.get("/qr-code")
+def qr_code_generate(username: str, mealname: str, eventname: str, db: Session = Depends(get_db)):
+    return get_qr_string(username, mealname, eventname, db)

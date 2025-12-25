@@ -73,4 +73,3 @@ def activate_meal_session(meal_id: uuid.UUID, db: Session):
 
     return {"message" : "meal session updated successfully"} 
 
-

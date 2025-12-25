@@ -21,3 +21,4 @@ class Event(Base):
     meal_sessions = relationship("MealSession", back_populates = "event")
     ordering_services = relationship("OrderingService", back_populates="event")
     food_claims = relationship("FoodClaim", back_populates = "events")
+    event_participants = relationship("EventParticipant", back_populates="event")

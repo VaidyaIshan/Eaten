@@ -16,3 +16,13 @@ class FeedbackResponse(BaseModel):
 
     class Config:
         from_attributes = True  
+
+
+class GetAllFeedback(BaseModel):
+    id: UUID
+    response: str
+    user_id: UUID
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
