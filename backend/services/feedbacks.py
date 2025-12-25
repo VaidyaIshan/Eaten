@@ -39,3 +39,8 @@ def delete_feedback(feedback_id: uuid.UUID, db: Session):
     db.commit()
 
     return {"message" : "feedback deleted successfully"}
+
+def get_feedback(db: Session):
+    feedback = db.query(Feedback).all()
+
+    return feedback
