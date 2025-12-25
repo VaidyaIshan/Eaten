@@ -1,4 +1,23 @@
-@import "tailwindcss";
+/* @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@import "tailwindcss/preflight"
+@tailwind utilities;
+ */
+
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+
+@theme {
+  --color-primary: #6A5ACD;
+  --color-primary-light: #6366F1;
+  --color-primary-dark: #3730A3;
+
+  --color-secondary: #22C55E;
+  --color-accent: #F59E0B;
+
+  
+}
 
 :root {
   --background: #ffffff;
