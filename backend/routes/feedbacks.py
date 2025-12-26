@@ -10,7 +10,7 @@ from typing import List
 router = APIRouter(prefix="/feedback")
 
 @router.post("/response", response_model= FeedbackResponse)
-def feedback_add(username: str, review:str, db: Session = Depends(get_db)):
+def feedback_add(username: str, review: str, db: Session = Depends(get_db)):
     return add_feedback(username, review, db)
 
 @router.delete("/delete")

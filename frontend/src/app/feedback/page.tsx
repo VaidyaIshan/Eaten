@@ -7,12 +7,12 @@ export default function FeedbackPage() {
   const [review, setReview] = useState("")
 
   async function submitFeedback() {
-    const res = await fetch(
-      `http://localhost:8000/feedback/response?username=${username}&review=${review}`,
-      {
-        method: "POST",
-      }
-    )
+      const res = await fetch(
+        `http://localhost:8000/Eaten/feedback/response?username=${username}&review=${review}`,
+        {
+          method: "POST",
+        }
+      )
 
     if (!res.ok) {
       alert("Failed to submit feedback")
