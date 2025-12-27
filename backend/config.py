@@ -9,5 +9,8 @@ load_dotenv() # Loading all enV variables from .env file
 # }
 # print(config)
 
-SUPABASE_DIRECT_URI = os.getenv('CONNECTION')  # For Loading Single ENV variable
+SUPABASE_DIRECT_URI = os.getenv('CONNECTION')  # For Loading Single ENV variableS
+SECRET_KEY = os.getenv('SECRET_KEY')
+ALGORITHM = os.getenv('ALGORITHM')
+TOKEN_EXPIRES = int(os.getenv('TOKEN_EXPIRES'))
 
