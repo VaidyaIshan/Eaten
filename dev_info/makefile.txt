@@ -1,0 +1,8 @@
+To run both frontend and backend simultaneously
+- (firstly ensure that you are inside the root directory of Eaten)
+- run command: make run 
+
+inside the Makefile change the command for virtual environment according to WINDOWS if necessary
+
+
+
