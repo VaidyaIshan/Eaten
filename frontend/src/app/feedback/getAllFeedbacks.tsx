@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react"
 import React from "react"
 
@@ -8,7 +10,7 @@ interface UserReview{
   created_at: Date
 }
 
-const GetAllFeedback = () => {
+const GetAllFeedback = ({ newPost }) => {
 
   const [feedbacks, setFeedbacks] = useState<UserReview[]>([]);
 
@@ -27,7 +29,7 @@ const GetAllFeedback = () => {
       }
 
       fetchFeedback();
-    }, []);
+    }, [newPost]);
 
   }
 

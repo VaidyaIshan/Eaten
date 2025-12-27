@@ -1,6 +1,7 @@
+"use client"
 import { useState } from "react"
 
-const PostFeedback = () => {
+const PostFeedback = ({ onSuccess }) => {
 
   const [username, setUsername] = useState("")
   const [review, setReview] = useState("")
@@ -20,6 +21,7 @@ const PostFeedback = () => {
 
     const data = await res.json()
     console.log(data)
+    onSuccess();
     alert("Feedback submitted")
   }
 
