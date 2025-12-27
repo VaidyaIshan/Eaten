@@ -5,8 +5,9 @@ from schemas.event_schemas import EventRegister, EventResponse
 from services.events import register_event, delete_event, activate_event
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
+from services.auth import get_current_user
 
-router = APIRouter(prefix="/event")
+router = APIRouter(prefix="/event", dependencies=[Depends(get_current_user)])
 
 @router.post("/", response_model=EventResponse)
 def event_register(event_data: EventRegister, db: Session = Depends(get_db)):

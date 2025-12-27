@@ -6,8 +6,9 @@ import services.order_services as order_services
 from schemas.ordering_service import OrderCreate,OrderResponse,OrderUpdate, OrderingServiceCreate, ServiceItemCreate, ServiceItemUpdate
 import uuid
 from typing import Annotated, List
+from services.auth import get_current_user
 
-router = APIRouter(prefix="/orders")
+router = APIRouter(prefix="/orders", dependencies=[Depends(get_current_user)])
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
