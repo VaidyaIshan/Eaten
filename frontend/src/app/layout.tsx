@@ -6,7 +6,7 @@ const cabinetGrotesk = localFont({
   src: [
     {
       path: "../../public/fonts/Cabinet_Grotesk/CabinetGrotesk-Variable.woff2",
-      weight: "100 900", // ✅ correct
+      weight: "100 900", 
       style: "normal",
     },
   ],
