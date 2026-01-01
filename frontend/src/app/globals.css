@@ -1,3 +1,4 @@
+@import "tailwindcss";
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 
@@ -5,13 +6,13 @@
   --color-primary: #6A5ACD;
   --color-primary-light: #6366F1;
   --color-primary-dark: #3730A3;
-  --color-secondary: #22C55E;
-  --color-accent: #F59E0B;
+  --color-secondary: #FF6FB5;
+  --color-accent: #F6C900;
 }
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #6A5ACD;
 }
 
 @theme inline {
@@ -21,7 +22,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #6A5ACD;
     --foreground: #ededed;
   }
 }
