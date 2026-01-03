@@ -29,3 +29,4 @@ def get_qr_string(username, mealname, eventname, db: Session):
     qrcode = f"{userid}+{mealid}"
 
     return qrcode
+    
