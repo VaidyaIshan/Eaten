@@ -8,6 +8,8 @@
   --color-primary-dark: #3730A3;
   --color-secondary: #FF6FB5;
   --color-accent: #F6C900;
+
+  
 }
 
 :root {
@@ -31,4 +33,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-my-custom), sans-serif;
+  
+}
+
+.border-accent {
+  border: var(--width) solid var(--color-accent);
 }
