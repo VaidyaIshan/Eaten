@@ -1,7 +1,21 @@
-export default function Home(){
+import React from "react"
+import DonutSVG from "./assets/vectors/Donut"
+import MoonSVG from "./assets/vectors/Moon"
+export default function MainPage(){
     return(
         <>
-        <h1 className="text-white bg-primary h-128">Eaten</h1>
+        <div className="min-h-screen flex flex-col justify-center left-5 fixed">
+              <div className="fixed right-2 top-4">
+                    <MoonSVG/>
+                </div>
+
+            <p className="text-[96px] font-bold text-white ">Eaten</p>
+            <p className="text-[30px] font-bold text-accent ">Where every bite feels unreal</p>
+
+             <div className="fixed bottom-0 right-0">
+                    <DonutSVG/>
+                 </div>
+        </div>
         </>
     )
 }

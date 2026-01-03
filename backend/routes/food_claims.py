@@ -4,10 +4,10 @@ from db import get_db
 from services.food_claims import create_food_claim, activate_food_claim, delete_food_claim
 from schemas.food_claims import FoodClaimCreate, FoodClaimResponse
 import uuid
-from sqlalchemy.dialects.postgresql import UUID
 from services.qr_system import get_qr_string
+from services.auth import get_current_user
 
-router = APIRouter(prefix="/food-claim")
+router = APIRouter(prefix="/food-claim", dependencies=[Depends(get_current_user)])
 
 @router.post("/", response_model = FoodClaimResponse)
 def food_claim_create(food_claim_data: FoodClaimCreate, db: Session = Depends(get_db)):
