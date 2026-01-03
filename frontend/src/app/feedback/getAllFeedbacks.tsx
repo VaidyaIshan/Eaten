@@ -19,7 +19,7 @@ const GetAllFeedback = ({ newPost }) => {
     useEffect(() => {
       const fetchFeedback = async () => {
         try{
-          const res = await fetch("http://localhost:8000/Eaten/feedback/get-all-users");
+          const res = await fetch("http://localhost:8000/Eaten/feedback/get-all-feedbacks");
           const holdFeedback: UserReview[] = await res.json(); 
 
           setFeedbacks(holdFeedback);
