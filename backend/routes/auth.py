@@ -24,7 +24,7 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
 def login_for_access_token(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     return login_user(user_credentials, db)
 
-@router.post("/")
+@public_router.post("/")
 def initial_roles(db: Session = Depends(get_db)):
     return create_roles(db)
 
