@@ -52,7 +52,7 @@ def delete_user_data(user_id: uuid.UUID, db: Session = Depends(get_db)):
 def change_is_active(user_id: uuid.UUID, db: Session = Depends(get_db)):
     return set_is_active(user_id, db)
 
-@router.get("/me", response_model=TokenReponse)
+@router.get("/me", response_model=UserResponse)
 def get_logged_in_user(current_user:User=Depends(get_current_user)):
     return current_user
 
