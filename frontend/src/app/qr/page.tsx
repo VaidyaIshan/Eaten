@@ -47,7 +47,7 @@ export default function Useridpage() {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <div style={{ background: 'white', padding: '16px' }}>
+    <div style={{ marginTop: '350px', marginLeft:'600px' }}>
        {userId ? (<QRCode value={userId} /> ) : (
            <div>
                <p>No User ID found.</p>

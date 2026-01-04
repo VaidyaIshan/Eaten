@@ -4,9 +4,7 @@ from db import get_db
 from schemas.qr_schema import QRVerifyRequest
 from services.qr_verification import process_qr_verification
 
-router = APIRouter(
-    prefix="/qr",
-    tags=["QR Verification"]
+router = APIRouter(prefix="/qr", tags=["QR Verification"]
 )
 
 @router.post("/verify")

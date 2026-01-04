@@ -15,7 +15,7 @@ def get_qr_string(username, mealname, eventname, db: Session):
     userid = user.id
 
     event = db.query(Event).filter(Event.name == eventname).first()
-    if not event:
+    if not event: 
         raise HTTPException(status_code=404, detail="event not found")
 
     eventid = event.id
