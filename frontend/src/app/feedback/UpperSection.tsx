@@ -1,4 +1,4 @@
-import FeedbackLogo from '../assets/vectors/FeedbackLogo.tsx'
+import FeedbackLogo from '../assets/vectors/FeedbackLogo'
 const UpperSection = () => {
 
   return(
