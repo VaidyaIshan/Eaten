@@ -1,53 +1,28 @@
-"use client"
-import { useState } from "react"
-
-const PostFeedback = ({ onSuccess }) => {
-
-  const [username, setUsername] = useState("")
-  const [review, setReview] = useState("")
-
-  const submitFeedback = async () => {
-      const res = await fetch(
-        `http://localhost:8000/Eaten/feedback/response?username=${username}&review=${review}`,
-        {
-          method: "POST",
-        }
-      )
-
-    if (!res.ok) {
-      alert("Failed to submit feedback")
-      return
-    }
-
-    const data = await res.json()
-    console.log(data)
-    onSuccess();
-    alert("Feedback submitted")
-  }
+const PostFeedback = () => {
 
   return(
-    <div className="p-md space-y-md max-w-md">
-      <input
-        className="border p-sm w-full"
-        placeholder="Username"
-        value={username}
-        onChange={e => setUsername(e.target.value)}
-      />
 
-      <textarea
-        className="border p-sm w-full"
-        placeholder="Review"
-        value={review}
-        onChange={e => setReview(e.target.value)}
-      />
+    <div className = "flex flex-col p-0 m-0 gap-5 w-full justify-end items-end">
 
-      <button
-        onClick={submitFeedback}
-        className="bg-primary text-white px-md py-sm rounded-md"
-      >
-        Submit
-      </button>
+      <div className = "flex flex-col gap-[4px] w-full m-0 p-0">
+        <textarea
+          className = "placeholder-gray-500 border border-gray-500 w-full h-[15.25rem] text-gray-900 text-[10px] rounded-[1px] p-[3px]"
+          placeholder = "Enter your thoughts..."
+        />
+      <div className = "flex justify-end">
+        <p className = "italic text-[#ACACAC] text-[8px]">
+          /*Your feedback will be monitored*/
+        </p>
+      </div>
+      </div>
+
+        <button
+          className="bg-primary text-white text-[12px] rounded-[4px] w-[12.813rem] h-[1.813rem]"
+        >
+          Submit Feedback
+        </button>
     </div>
+
   )
 }
 

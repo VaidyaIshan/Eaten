@@ -1,18 +1,16 @@
-"use client"
-
 import React from "react"
-import { useState } from "react"
-import PostFeedback from './postFeedback.tsx'
-import GetAllFeedback from './getAllFeedbacks.tsx'
+import UpperSection from './UpperSection'
+import LowerSection from './LowerSection'
 
 export default function FeedbackPage() {
 
-  const [newPost, setNewPost] = useState(0);
-
   return (
     <>
-      <PostFeedback onSuccess = {() => setNewPost((count) => count + 1)}/>
-      <GetAllFeedback newPost={newPost}/>
+      <div className = "flex flex-col gap-0 m-0 overflow-x-hidden w-full">
+        <UpperSection/>
+        <LowerSection/>
+      </div>
+
     </>
   )
 }
