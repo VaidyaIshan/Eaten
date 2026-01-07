@@ -5,6 +5,12 @@ from models.users import User
 def create_roles(db: Session):
     if db.query(Role).first() is None:
         try:
+            superadmin = Role(
+                    id=0,
+                    name="superadmin",
+                    description="superadmin role description"
+                    )
+            
             admin = Role(
                     id=1,
                     name="admin",
@@ -17,10 +23,10 @@ def create_roles(db: Session):
                     description="user role description",
                     )
         
-            db.add_all([admin, user])
+            db.add_all([superadmin, admin, user])
             db.commit()
 
-            return [admin, user]
+            return [superadmin, admin, user]
 
         except Exception as e:
             db.rollback()
