@@ -1,52 +1,31 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import React from "react"
-
-interface UserReview{
-  id: UUID,
-  response: string,
-  user_id: UUID,
-  created_at: Date
-}
-
-const GetAllFeedback = ({ newPost }) => {
-
-  const [feedbacks, setFeedbacks] = useState<UserReview[]>([]);
-
-  const getAllFeedback = () => {
-
-    useEffect(() => {
-      const fetchFeedback = async () => {
-        try{
-          const res = await fetch("http://localhost:8000/Eaten/feedback/get-all-users");
-          const holdFeedback: UserReview[] = await res.json(); 
-
-          setFeedbacks(holdFeedback);
-        }catch(error){
-          alert("Failed to fetch feedbacks")
-        } 
-      }
-
-      fetchFeedback();
-    }, [newPost]);
-
-  }
-
-  getAllFeedback();
+const GetAllFeedback = () => {
 
   return(
-    <div className="p-md space-y-md max-w-md">
-      <ul>
-        {feedbacks.map((feedback)=> (
-          <li key={feedback.id}>
-            {feedback.response}
-          </li>
-        ))}
-      </ul>
+    <div className = "flex flex-col w-full">
+
+      <div className = "w-full flex flex-col">
+        <p className = "text-[#000000] text-[10px]">See what others are saying below!</p>
+        <div className = "w-full h-[2px] bg-[#7466C9] flex justify-end">
+          <div className = "relative w-[3.75rem] h-[5px] bg-[#7466C9] rounded-[9px] bottom-[1px] right-[10px]">
+            <div className = "hidden">
+              <p>placeholder</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className = "w-full flex-col w-full">
+        <div className = "w-full flex flex-row">
+          <div className = "w-[1.125rem] h-[1.125rem] rounded-full bg-[#7466C9] text-center">
+            <p>A</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   )
 
 }
 
 export default GetAllFeedback;
+
