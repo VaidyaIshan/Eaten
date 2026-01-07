@@ -1,5 +1,5 @@
-import PostFeedback from './postFeedback.tsx'
-import GetAllFeedback from './getAllFeedbacks.tsx'
+import PostFeedback from './postFeedback'
+import GetAllFeedback from './getAllFeedbacks'
 
 const LowerSection = () => {
 

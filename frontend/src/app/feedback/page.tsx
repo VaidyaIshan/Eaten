@@ -1,6 +1,6 @@
 import React from "react"
-import UpperSection from './UpperSection.tsx'
-import LowerSection from './LowerSection.tsx'
+import UpperSection from './UpperSection'
+import LowerSection from './LowerSection'
 
 export default function FeedbackPage() {
 
