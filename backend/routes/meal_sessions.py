@@ -2,11 +2,20 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from db import get_db
 from schemas.meal_sessions_schemas import MealSessionRegister, MealSessionResponse, MealSessionUpdate
-from services.meal_sessions import create_meal_session, delete_meal_session, update_meal_session, activate_meal_session
+from services.meal_sessions import create_meal_session, delete_meal_session, update_meal_session, activate_meal_session, get_meal_sessions_by_event, get_meal_session_by_id
 import uuid
 from services.auth import get_current_user
+from typing import List
 
 router = APIRouter(prefix="/meal-session", dependencies=[Depends(get_current_user)])
+
+@router.get("/event/{event_id}", response_model=List[MealSessionResponse])
+def get_meal_sessions_by_event_id(event_id: uuid.UUID, db: Session = Depends(get_db)):
+    return get_meal_sessions_by_event(event_id, db)
+
+@router.get("/{meal_id}", response_model=MealSessionResponse)
+def get_meal_session(meal_id: uuid.UUID, db: Session = Depends(get_db)):
+    return get_meal_session_by_id(meal_id, db)
 
 @router.post("/", response_model = MealSessionResponse)
 def meal_session_create(event_name: str, meal_session_data: MealSessionRegister, db: Session = Depends(get_db)):

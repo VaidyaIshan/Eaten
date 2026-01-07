@@ -7,6 +7,19 @@ from schemas.meal_sessions_schemas import MealSessionRegister, MealSessionUpdate
 from models.events import Event
 from models.meal_sessions import MealSession
 
+
+def get_meal_session_by_id(meal_id: uuid.UUID, db: Session):
+    meal_session = db.query(MealSession).filter(MealSession.id == meal_id).first()
+    if not meal_session:
+        raise HTTPException(status_code=404, detail="Meal session not found")
+    return meal_session
+
+def get_meal_sessions_by_event(event_id: uuid.UUID, db: Session):
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+    return db.query(MealSession).filter(MealSession.event_id == event_id).all()
+
 def create_meal_session(event_name: str, meal_session_data: MealSessionRegister, db: Session):
     eventname = db.query(Event).filter(Event.name == event_name).first()
 

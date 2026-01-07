@@ -3,7 +3,7 @@ from passlib.context import CryptContext
 from datetime import datetime
 from fastapi import HTTPException, status, Depends
 from models.users import User
-from schemas.auth_schemas import UserRegister, TokenReponse
+from schemas.auth_schemas import UserRegister, TokenResponse
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import timedelta, datetime, timezone
@@ -60,14 +60,14 @@ def verify_password(pwd:str, hashed_pwd:str):
      return hasher.verify(pwd, hashed_pwd)
 
 
-def verify_token(token:str)->TokenReponse:
+def verify_token(token:str)->TokenResponse:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username : str = payload.get("sub")
         if username is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Could not verify credentials",headers={"WWW-Authenticate":"Bearer"})
         
-        return TokenReponse(username=username)
+        return TokenResponse(username=username)
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Could not verify credentials",headers={"WWW-Authenticate":"Bearer"})
 
@@ -93,23 +93,23 @@ def get_current_user(db:Session = Depends(get_db), token:str=Depends(oauth2_sche
 
     return user
 
-def verify_token_endpoint(current_user:User = Depends(get_current_user)):
-    return {
-        "valid":True,
-        "user":{
-            "id":current_user.id,
-            "name":current_user.username,
-            "email":current_user.email,
-            "role":current_user.role
-        }
-    }
-    
-
-def del_user(user_id: uuid.UUID, db: Session):
+def del_user(user_id: uuid.UUID, current_user_id: uuid.UUID, db: Session):
     user = db.query(User).filter(User.id == user_id).first()
+    current_user = db.query(User).filter(User.id == current_user_id).first()
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+    
+    if not current_user:
+        raise HTTPException(status_code=404, detail="Current user not found")
+
+    # Prevent users from deleting themselves
+    if current_user_id == user_id:
+        raise HTTPException(status_code=403, detail="Cannot delete your own account")
+    
+    # Prevent admins from deleting superadmin users (only superadmin can delete superadmin)
+    if user.role_id == 0 and current_user.role_id != 0:
+        raise HTTPException(status_code=403, detail="Only superadmin can delete superadmin users")
 
     db.delete(user)
     db.commit()

@@ -4,9 +4,8 @@ from datetime import datetime
 from uuid import UUID
 
 class FeedbackAdd(BaseModel):
-    id: UUID
-    response:str
-    user_id:UUID
+    review: str
+    username:str
 
 class FeedbackResponse(BaseModel):
     id: UUID
