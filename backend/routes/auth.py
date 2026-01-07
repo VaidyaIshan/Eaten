@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from db import get_db
 from schemas.auth_schemas import UserRegister, UserResponse, Token, TokenReponse
-from services.auth import register_user, login_user, del_user, get_current_user, verify_token_endpoint
+from services.auth import register_user, login_user, del_user, get_current_user
 from services.roles_services import create_roles, get_roles
 from models.users import User
 from services.total_users_admins import total_users, total_admins
@@ -56,8 +56,5 @@ def change_is_active(user_id: uuid.UUID, db: Session = Depends(get_db)):
 def get_logged_in_user(current_user:User=Depends(get_current_user)):
     return current_user
 
-@router.get("/verify-token")
-def verify_token():
-    return verify_token_endpoint()
     
 

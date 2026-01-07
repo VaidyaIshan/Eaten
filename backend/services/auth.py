@@ -93,18 +93,6 @@ def get_current_user(db:Session = Depends(get_db), token:str=Depends(oauth2_sche
 
     return user
 
-def verify_token_endpoint(current_user:User = Depends(get_current_user)):
-    return {
-        "valid":True,
-        "user":{
-            "id":current_user.id,
-            "name":current_user.username,
-            "email":current_user.email,
-            "role":current_user.role
-        }
-    }
-    
-
 def del_user(user_id: uuid.UUID, db: Session):
     user = db.query(User).filter(User.id == user_id).first()
 
