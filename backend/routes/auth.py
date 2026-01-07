@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from db import get_db
-from schemas.auth_schemas import UserRegister, UserResponse, Token, TokenReponse
+from schemas.auth_schemas import UserRegister, UserResponse, Token
 from services.auth import register_user, login_user, del_user, get_current_user
 from services.roles_services import create_roles, get_roles
 from models.users import User
@@ -52,7 +52,7 @@ def delete_user_data(user_id: uuid.UUID, db: Session = Depends(get_db)):
 def change_is_active(user_id: uuid.UUID, db: Session = Depends(get_db)):
     return set_is_active(user_id, db)
 
-@router.get("/me", response_model=TokenReponse)
+@router.get("/me", response_model=UserResponse)
 def get_logged_in_user(current_user:User=Depends(get_current_user)):
     return current_user
 

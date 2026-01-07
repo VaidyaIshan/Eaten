@@ -3,7 +3,7 @@ from passlib.context import CryptContext
 from datetime import datetime
 from fastapi import HTTPException, status, Depends
 from models.users import User
-from schemas.auth_schemas import UserRegister, TokenReponse
+from schemas.auth_schemas import UserRegister, TokenResponse
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import timedelta, datetime, timezone
@@ -60,14 +60,14 @@ def verify_password(pwd:str, hashed_pwd:str):
      return hasher.verify(pwd, hashed_pwd)
 
 
-def verify_token(token:str)->TokenReponse:
+def verify_token(token:str)->TokenResponse:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username : str = payload.get("sub")
         if username is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Could not verify credentials",headers={"WWW-Authenticate":"Bearer"})
         
-        return TokenReponse(username=username)
+        return TokenResponse(username=username)
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Could not verify credentials",headers={"WWW-Authenticate":"Bearer"})
 
