@@ -9,6 +9,41 @@ from datetime import datetime
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
 
+def get_all_food_claims(db: Session):
+    return db.query(FoodClaim).all()
+
+def create_food_claim_from_qr(user_id: uuid.UUID, meal_session_id: uuid.UUID, db: Session):
+    user = db.query(User).filter(User.id == user_id).first()
+    meal_session = db.query(MealSession).filter(MealSession.id == meal_session_id).first()
+    
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    if not meal_session:
+        raise HTTPException(status_code=404, detail="Meal session not found")
+    
+    # Check if food claim already exists for this user and meal session
+    existing_claim = db.query(FoodClaim).filter(
+        FoodClaim.user_id == user_id,
+        FoodClaim.meal_session_id == meal_session_id
+    ).first()
+    
+    if existing_claim:
+        raise HTTPException(status_code=409, detail="Food claim already exists for this user and meal session")
+    
+    foodclaim = FoodClaim(
+        user_id=user.id,
+        meal_session_id=meal_session.id,
+        event_id=meal_session.event_id,
+        claimed_at=datetime.now(),
+        is_claimed=True  # Set to True when scanned
+    )
+    
+    db.add(foodclaim)
+    db.commit()
+    db.refresh(foodclaim)
+    
+    return foodclaim
+
 def create_food_claim(food_claim_data: FoodClaimCreate, db: Session):
 
     user = db.query(User).filter(User.username == food_claim_data.username).first()
