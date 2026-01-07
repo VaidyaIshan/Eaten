@@ -93,11 +93,23 @@ def get_current_user(db:Session = Depends(get_db), token:str=Depends(oauth2_sche
 
     return user
 
-def del_user(user_id: uuid.UUID, db: Session):
+def del_user(user_id: uuid.UUID, current_user_id: uuid.UUID, db: Session):
     user = db.query(User).filter(User.id == user_id).first()
+    current_user = db.query(User).filter(User.id == current_user_id).first()
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
+    
+    if not current_user:
+        raise HTTPException(status_code=404, detail="Current user not found")
+
+    # Prevent users from deleting themselves
+    if current_user_id == user_id:
+        raise HTTPException(status_code=403, detail="Cannot delete your own account")
+    
+    # Prevent admins from deleting superadmin users (only superadmin can delete superadmin)
+    if user.role_id == 0 and current_user.role_id != 0:
+        raise HTTPException(status_code=403, detail="Only superadmin can delete superadmin users")
 
     db.delete(user)
     db.commit()
