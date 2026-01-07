@@ -3,7 +3,7 @@ from datetime import datetime
 from fastapi import HTTPException
 import uuid
 from sqlalchemy.dialects.postgresql import UUID
-from schemas.meal_sessions_schemas import MealSessionRegister, MealSessionUpdate
+from schemas.meal_sessions_schemas import MealSessionRegister, MealSessionUpdate, MealSessionResponse
 from models.events import Event
 from models.meal_sessions import MealSession
 
@@ -70,6 +70,31 @@ def update_meal_session(meal_id: uuid.UUID, new_time: MealSessionUpdate, db: Ses
     
     return {"message" : "meal session updated successfully"}
 
+
+
+def get_meal_session_by_id(meal_id: uuid.UUID, db: Session):
+    meal = db.query(MealSession).filter(MealSession.id == meal_id).first()
+    
+    if not meal:
+        raise HTTPException(status_code=404, detail="Meal session not found")
+        
+    return meal
+
+def get_meal_id(event_name: str, meal_type: str, db: Session):
+    event = db.query(Event).filter(Event.name == event_name).first()
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+
+    meal_session = db.query(MealSession).filter(
+        MealSession.event_id == event.id,
+        MealSession.meal_type == meal_type
+    ).first()
+
+    if not meal_session:
+        raise HTTPException(status_code=404, detail="Meal session not found")
+
+    return {"meal_id": meal_session.id}
+
 def activate_meal_session(meal_id: uuid.UUID, db: Session):
     mealsession = db.query(MealSession).filter(MealSession.id == meal_id).first()
 
@@ -85,4 +110,10 @@ def activate_meal_session(meal_id: uuid.UUID, db: Session):
     db.refresh(mealsession)
 
     return {"message" : "meal session updated successfully"} 
+
+def get_allmealsession(db: Session):
+    mealsession = db.query(MealSession).all()
+
+    return mealsession
+
 

@@ -23,6 +23,9 @@ class MealSessionResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
+class MealIdResponse(BaseModel):
+    id:UUID
+
     class Config:
 
         from_attributes = True
