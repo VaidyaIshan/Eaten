@@ -11,8 +11,8 @@ from services.auth import get_current_user
 router = APIRouter(prefix="/feedback", dependencies=[Depends(get_current_user)])
 
 @router.post("/response", response_model= FeedbackResponse)
-def feedback_add(username: str, review: str, db: Session = Depends(get_db)):
-    return add_feedback(username, review, db)
+def feedback_add(feedback_add:FeedbackAdd, db: Session = Depends(get_db)):
+    return add_feedback(feedback_add.username, feedback_add.review, db)
 
 @router.delete("/delete")
 def feedback_delete(feedback_id: uuid.UUID, db: Session = Depends(get_db)):

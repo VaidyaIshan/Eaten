@@ -29,4 +29,15 @@ def get_qr_string(username, mealname, eventname, db: Session):
     qrcode = f"{userid}+{mealid}"
 
     return qrcode
-    
+
+def get_qr_string_by_meal_id(user_id: uuid.UUID, meal_id: uuid.UUID, db: Session):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="user not found")
+
+    meal = db.query(MealSession).filter(MealSession.id == meal_id).first()
+    if not meal:
+        raise HTTPException(status_code=404, detail="meal session not found")
+
+    qrcode = f"{user_id}+{meal_id}"
+    return qrcode

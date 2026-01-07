@@ -2,7 +2,9 @@ from models.users import User
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 import uuid
-from sqlalchemy.dialects.postgresql import UUID
+
+def get_all_users(db: Session):
+    return db.query(User).all()
 
 def set_is_active(user_id: uuid.UUID,db: Session):
     user = db.query(User).filter(User.id == user_id).first()

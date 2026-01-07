@@ -7,6 +7,15 @@ import uuid
 from sqlalchemy.dialects.postgresql import UUID
 from models.meal_sessions import MealSession
 
+def get_all_events(db: Session):
+    return db.query(Event).all()
+
+def get_event_by_id(event_id: uuid.UUID, db: Session):
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+    return event
+
 def register_event(event_data: EventRegister, db: Session):
     
     if db.query(Event).filter(Event.name == event_data.name).first():
