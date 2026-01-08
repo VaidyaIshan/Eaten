@@ -7,8 +7,6 @@
   --color-primary-dark: #3730A3;
   --color-secondary: #FF6FB5;
   --color-accent: #F6C900;
-
-
 }
 
 :root {
@@ -37,4 +35,10 @@ body {
 
 .border-accent {
   border: var(--width) solid var(--color-accent);
+}
+.bg-primary-gradient {
+  background: linear-gradient(180deg, #6A5ACD 0%, #3A2F82 100%);
+}
+.bg-profile-picture-gradient {
+  background: linear-gradient(180deg, #6A72DE 0%, #2B1186 100%);
 }

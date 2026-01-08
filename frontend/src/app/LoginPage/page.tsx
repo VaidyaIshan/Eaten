@@ -1,6 +1,5 @@
-import MoonSVG from "../assets/vectors/Moon.tsx"
-import LoginSection from "../components/LoginSection/login-section.tsx"
-
+import MoonSVG from "../assets/vectors/Moon"
+import LoginSection from "../components/LoginSection/login-section"
 export default function LoginPage(){
   return (
     <>

@@ -14,7 +14,7 @@ const UpperSection = () => {
       </div>
 
       <p className = "w-[11rem] text-[10px] text-center">
-        "Tell us what you like, dislike, or what we can do better."
+        Tell us what you like, dislike, or what we can do better.
       </p>
       
     </div>
