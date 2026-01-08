@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useRouter, useParams } from "next/navigation"
-import { useAuth } from "@/src/hooks/useAuth"
+import { useAuth } from "@/src/hooks/tempuseAuth"
 import QRCode from "react-qr-code"
 import QrPage from "@/src/app/qr/page"
 

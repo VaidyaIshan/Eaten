@@ -10,7 +10,7 @@ export default function MainPage(){
                 </div>
 
             <p className="text-[96px] font-bold text-white ">Eaten</p>
-            <p className="text-[30px] font-bold text-accent ">Where every bite feels unreal</p>
+            <p className="text-[30px] font-bold text-[#F08181] ">Where every bite feels unreal</p>
 
              <div className="fixed bottom-0 right-0">
                     <DonutSVG/>

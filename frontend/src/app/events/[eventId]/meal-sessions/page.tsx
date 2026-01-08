@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
-import { useAuth } from "@/src/hooks/useAuth"
+import { useAuth } from "@/src/hooks/tempuseAuth"
 
 interface MealSession {
   id: string
