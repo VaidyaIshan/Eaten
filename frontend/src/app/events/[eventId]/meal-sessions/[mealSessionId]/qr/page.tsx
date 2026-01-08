@@ -125,7 +125,7 @@ export default function QRCodePage() {
     <div className="min-h-screen bg-gray-50 flex flex-col items-center">
       <div className="w-full max-w-3xl bg-white min-h-screen relative">
 
-        <div className="bg-[#5B4DBC] w-full text-white p-6 relative overflow-hidden">
+        <div className="bg-[#5B4DBC] w-full h-60 text-white p-6 relative overflow-hidden">
   <div className="flex justify-between items-center z-10 relative mb-2">
             <button 
               onClick={() =>router.push(`/events/${eventId}/meal-sessions`)}
