@@ -41,6 +41,15 @@ def delete_feedback(feedback_id: uuid.UUID, db: Session):
     return {"message" : "feedback deleted successfully"}
 
 def get_feedback(db: Session):
-    feedback = db.query(Feedback).all()
+    feedbacks = db.query(Feedback).all()
 
-    return feedback
+    return [
+            {
+                "id": fb.id,
+                "response": fb.response,
+                "created_at": fb.created_at,
+                "user_id": fb.user_id,
+                "username": fb.users.username
+            }
+            for fb in feedbacks
+        ]

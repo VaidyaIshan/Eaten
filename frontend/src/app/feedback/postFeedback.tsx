@@ -1,4 +1,75 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/src/hooks/useAuth"
+
 const PostFeedback = () => {
+
+  const router = useRouter()
+  const { user, loading, getToken } = useAuth()
+
+  const [review, setReview] = useState("")
+  const [submitting, setSubmitting] = useState(false)
+
+  //feedback submission function
+  const submitFeedback = async () => {
+
+    if(!review){
+      return alert("Please write a review")
+    }
+
+    if(!user){
+      console.log("no user going to login")
+      router.push("/LoginPage")
+      return 
+    }
+
+    setSubmitting(true)
+
+    const token = getToken()
+
+    if(!token){
+      console.log("no token going to login")
+      router.push("/LoginPage")
+      setSubmitting(false)
+      return
+    }
+
+    try{
+
+      const res = await fetch(
+        "http://localhost:8000/Eaten/feedback/response",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            username: user.username,
+            review,
+          }),
+        }
+      )
+
+      if(!res.ok){
+        throw new Error("Failed to submit feedback")
+      }
+
+      setReview("")
+      // await fetchFeedbacks()
+      alert("Feedback submitted")
+
+    }catch(err){
+      console.error(err)
+      alert("Failed to submit Feedback")
+    }finally{
+      setSubmitting(false)
+    }
+
+  }
+
 
   return(
 
@@ -6,8 +77,10 @@ const PostFeedback = () => {
 
       <div className = "flex flex-col gap-[4px] w-full m-0 p-0">
         <textarea
-          className = "placeholder-gray-500 border border-gray-500 w-full h-[15.25rem] text-gray-900 text-[10px] rounded-[1px] p-[3px]"
+          className = "placeholder-gray-500 border border-gray-500 w-full h-[15.25rem] text-gray-900 text-[15px] rounded-[1px] p-[3px]"
           placeholder = "Enter your thoughts..."
+          value = {review}
+          onChange = {(e) => setReview(e.target.value)}
         />
       <div className = "flex justify-end">
         <p className = "italic text-[#ACACAC] text-[8px]">
@@ -18,6 +91,8 @@ const PostFeedback = () => {
 
         <button
           className="bg-primary text-white text-[12px] rounded-[4px] w-[12.813rem] h-[1.813rem]"
+          onClick = {submitFeedback}
+          disabled = {submitting || !review}
         >
           Submit Feedback
         </button>
