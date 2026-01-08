@@ -22,6 +22,7 @@ class GetAllFeedback(BaseModel):
     response: str
     user_id: UUID
     created_at: datetime
+    username: str
 
     class Config:
         from_attributes = True
