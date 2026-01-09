@@ -9,7 +9,7 @@ import { ArrowLeft } from "lucide-react"
 interface MealSession {
   id: string
   event_id: string
-  meal_type: string
+  meal_type: string 
   start_time: string
   end_time: string
   is_active: boolean
