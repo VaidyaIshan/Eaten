@@ -123,12 +123,11 @@ export default function QRCodePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center">
-      <div className="w-full max-w-3xl bg-white min-h-screen relative">
-
+      <div className="w-full bg-white min-h-screen relative">
         <div className="bg-[#5B4DBC] w-full h-60 text-white p-6 relative overflow-hidden">
-  <div className="flex justify-between items-center z-10 relative mb-2">
-            <button 
-              onClick={() =>router.push(`/events/${eventId}/meal-sessions`)}
+          <div className="flex justify-between items-center z-10 relative mb-2">
+            <button
+              onClick={() => router.push(`/events/${eventId}/meal-sessions`)}
               className="p-2 -ml-2 hover:bg-white/10 rounded-full transition text-white flex items-center gap-2"
             >
               <ArrowLeft size={24} />
@@ -151,9 +150,9 @@ export default function QRCodePage() {
         <div className="w-full h-3 bg-[#FFC55A]"></div>
 
         <div className="p-8 flex flex-col items-center">
-        
-          <div className="max-w-md w-full bg-white rounded-xl shadow-lg border border-gray-100 p-8 flex flex-col items-center">
-            
+
+          <div className="w-full bg-white rounded-xl shadow-lg border border-gray-100 p-8 flex flex-col items-center">
+
             <h1 className="text-2xl text-[#5B4DBC] font-bold mb-8 text-center tracking-tight">
               SCAN TO GET A MEAL
             </h1>
