@@ -132,13 +132,13 @@ export default function MealSessionsPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center">
-      <div className="w-full max-w-3xl bg-white min-h-screen relative">
-        <div className="bg-primary text-white p-6 relative overflow-hidden">
+      <div className="w-full bg-white min-h-screen relative">
+        <div className="bg-primary text-white p-6 h-60 relative overflow-hidden">
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
             <StarsAndMoon />
           </div>
           <div className="flex justify-between items-center z-10 relative mb-2">
-            <button 
+            <button
               onClick={() => router.push('/events')}
               className="p-2 -ml-2 hover:bg-white/10 rounded-full transition text-white flex items-center gap-2"
             >
@@ -146,7 +146,7 @@ export default function MealSessionsPage() {
               <span className="text-sm font-medium">Back</span>
             </button>
           </div>
-         <div className="relative z-10 mt-2">
+          <div className="relative z-10 mt-2">
             <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-1">
               HAVE YOU
             </h6>
@@ -159,7 +159,7 @@ export default function MealSessionsPage() {
 
 
         <div className="p-6">
-          
+
 
           {event && (
             <div className="mb-8">
@@ -182,22 +182,20 @@ export default function MealSessionsPage() {
               {mealSessions.map((session) => (
                 <div
                   key={session.id}
-                  className={`bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all ${
-                    !session.is_active ? "opacity-70 bg-gray-50" : "hover:shadow-md"
-                  }`}
+                  className={`bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all ${!session.is_active ? "opacity-70 bg-gray-50" : "hover:shadow-md"
+                    }`}
                 >
-              
+
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
                       <h3 className="text-xl font-bold text-gray-800">
                         {session.meal_type}
                       </h3>
                       <span
-                        className={`px-3 py-0.5 rounded-full text-xs font-medium border ${
-                          session.is_active
+                        className={`px-3 py-0.5 rounded-full text-xs font-medium border ${session.is_active
                             ? "bg-white text-green-600 border-green-500"
                             : "bg-white text-red-500 border-red-500"
-                        }`}
+                          }`}
                       >
                         {session.is_active ? "Ongoing" : "Ended"}
                       </span>
@@ -207,11 +205,11 @@ export default function MealSessionsPage() {
                   <div className="space-y-3 mb-6 text-sm text-gray-600">
                     <div className="grid grid-cols-[80px_1fr]">
                       <span className="font-medium text-gray-900">Start Time:</span>
-                      <span>{new Date(session.start_time).toLocaleString()}</span>
+                      <span>{new Date(session.start_time).toLocaleString().split(",")[1]}</span>
                     </div>
                     <div className="grid grid-cols-[80px_1fr]">
                       <span className="font-medium text-gray-900">End Time:</span>
-                      <span>{new Date(session.end_time).toLocaleString()}</span>
+                      <span>{new Date(session.end_time).toLocaleString().split(",")[1]}</span>
                     </div>
                   </div>
 
@@ -219,11 +217,10 @@ export default function MealSessionsPage() {
                     <button
                       onClick={() => handleMealSessionClick(session)}
                       disabled={!session.is_active}
-                      className={`px-6 py-2.5 rounded-md font-medium text-white shadow-sm transition-all text-sm ${
-                        session.is_active
+                      className={`px-6 py-2.5 rounded-md font-medium text-white shadow-sm transition-all text-sm ${session.is_active
                           ? "bg-primary hover:bg-[#4a3ea3] active:scale-[0.98]"
                           : "bg-[#8b82c9] cursor-not-allowed"
-                      }`}
+                        }`}
                     >
                       Get Your QR
                     </button>
