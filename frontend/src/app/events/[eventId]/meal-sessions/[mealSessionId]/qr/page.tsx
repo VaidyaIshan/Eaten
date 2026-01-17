@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation"
 import { useAuth } from "@/src/hooks/useAuth"
 import QRCode from "react-qr-code"
 import StarsAndMoon from "@/src/app/assets/vectors/starsandmoon"
-import { ArrowLeft } from "lucide-react"
+import Navbar from "@/src/app/components/Navbar/navbar"
 
 interface MealSession {
   id: string
@@ -125,15 +125,7 @@ export default function QRCodePage() {
     <div className="min-h-screen bg-gray-50 flex flex-col items-center">
       <div className="w-full bg-white min-h-screen relative">
         <div className="bg-primary w-full h-60 text-white p-6 relative overflow-hidden">
-          <div className="flex justify-between items-center z-10 relative mb-2">
-            <button
-              onClick={() => router.push(`/events/${eventId}/meal-sessions`)}
-              className="p-2 -ml-2 hover:bg-white/10 rounded-full transition text-white flex items-center gap-2"
-            >
-              <ArrowLeft size={24} />
-              <span className="text-sm font-medium">Back</span>
-            </button>
-          </div>
+          <Navbar/>
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
             <StarsAndMoon />
           </div>
