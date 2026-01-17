@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { useAuth } from "@/src/hooks/useAuth";
-import { Feedback } from "../../interfaces/admin";
+import { useState, useEffect } from "react"
+import { useAuth } from "@/src/hooks/useAuth"
+import { Feedback } from "../../interfaces/admin"
 
 // Feedbacks Section
 export default function FeedbacksSection() {
@@ -33,6 +33,7 @@ export default function FeedbacksSection() {
 
     useEffect(() => {
         fetchFeedbacks()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleDelete = async (id: string) => {
@@ -58,28 +59,38 @@ export default function FeedbacksSection() {
     }
 
     return (
-        <div className="text-black">
-            <h2 className="text-2xl font-bold mb-4">Feedbacks Management</h2>
+        <div>
+            <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-900">Feedbacks Management</h2>
             {loading ? (
-                <p>Loading...</p>
+                <div className="flex justify-center items-center py-12">
+                    <p className="text-gray-500">Loading...</p>
+                </div>
             ) : (
                 <div className="space-y-4">
-                    {feedbacks.map((feedback) => (
-                        <div key={feedback.id} className="p-4 border rounded-lg flex justify-between items-center">
-                            <div className="flex-1">
-                                <p className="text-gray-800">{feedback.response}</p>
-                                <p className="text-sm text-gray-500 mt-2">
-                                    {new Date(feedback.created_at).toLocaleString()}
-                                </p>
-                            </div>
-                            <button
-                                onClick={() => handleDelete(feedback.id)}
-                                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 ml-4"
-                            >
-                                Delete
-                            </button>
+                    {feedbacks.length === 0 ? (
+                        <div className="text-center py-12 text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                            <p>No feedbacks found</p>
                         </div>
-                    ))}
+                    ) : (
+                        feedbacks.map((feedback) => (
+                            <div key={feedback.id} className="bg-white rounded-xl border border-gray-100 p-4 sm:p-5 hover:shadow-md transition-shadow">
+                                <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                                    <div className="flex-1 w-full">
+                                        <p className="text-gray-800 mb-3 leading-relaxed break-words">{feedback.response}</p>
+                                        <p className="text-xs text-gray-500">
+                                            {new Date(feedback.created_at).toLocaleString()}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={() => handleDelete(feedback.id)}
+                                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium flex-shrink-0 w-full sm:w-auto"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
             )}
         </div>

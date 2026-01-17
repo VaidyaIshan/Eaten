@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "@/src/hooks/useAuth"
 import { User } from "../../interfaces/admin"
-
 // Users Section
 export default function UsersSection({ isSuperAdmin }: { isSuperAdmin: boolean }) {
     const { getToken, user: currentUser } = useAuth()
@@ -33,6 +32,7 @@ export default function UsersSection({ isSuperAdmin }: { isSuperAdmin: boolean }
 
     useEffect(() => {
         fetchUsers()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleDelete = async (id: string) => {
@@ -117,33 +117,54 @@ export default function UsersSection({ isSuperAdmin }: { isSuperAdmin: boolean }
     }
 
     return (
-        <div className="text-black">
-            <h2 className="text-2xl font-bold mb-4">Users Management</h2>
-            {loading ? (
-                <p>Loading...</p>
-            ) : (
-                <div className="space-y-4">
-                    {users.map((user) => (
-                        <div key={user.id} className="p-4 border rounded-lg flex justify-between items-center">
-                            <div>
-                                <h3 className="font-bold text-lg">{user.username}</h3>
-                                <p className="text-black">{user.email || "No email"}</p>
-                                <p className="text-sm text-gray-500">
-                                    Role: {user.role_id === 0 ? "Superadmin" : user.role_id === 1 ? "Admin" : "User"}
-                                </p>
-                                <span
-                                    className={`inline-block px-2 py-1 rounded text-sm ${user.is_active ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
-                                        }`}
-                                >
-                                    {user.is_active ? "Active" : "Inactive"}
-                                </span>
+        <div>
+            <h2 className="text-xl sm:text-2xl font-bold mb-6 text-gray-900">Users Management</h2>
+
+            {/* Tabs */}
+            <div className="flex space-x-2 mb-6 border-b border-gray-200 pb-2">
+            </div>
+
+            {/* Tab Content */}
+
+            <div className="space-y-4">
+                {users.length === 0 ? (
+                    <div className="text-center py-12 text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                        <p>No users found</p>
+                    </div>
+                ) : (
+                    users.map((user) => (
+                        <div key={user.id} className="bg-white rounded-xl border border-gray-100 p-4 sm:p-5 hover:shadow-md transition-shadow">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-purple-100 overflow-hidden border border-gray-200 flex items-center justify-center flex-shrink-0">
+                                    <div className="text-purple-600 font-bold text-base sm:text-lg">
+                                        {user.username.charAt(0).toUpperCase()}
+                                    </div>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="font-bold text-base sm:text-lg text-gray-800 truncate">{user.username}</h3>
+                                    <p className="text-xs sm:text-sm text-gray-600 truncate">{user.email || "No email"}</p>
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full font-medium">
+                                            {user.role_id === 0 ? "Superadmin" : user.role_id === 1 ? "Admin" : "User"}
+                                        </span>
+                                        <span
+                                            className={`text-xs px-2 py-1 rounded-full font-medium ${user.is_active ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
+                                                }`}
+                                        >
+                                            {user.is_active ? "Active" : "Inactive"}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="flex space-x-2">
+
+                            <hr className="mb-4 border-gray-100" />
+
+                            <div className="flex flex-col sm:flex-row gap-2">
                                 <button
                                     onClick={() => handleToggleActive(user.id)}
-                                    className={`px-4 py-2 rounded-md ${user.is_active
-                                        ? "bg-yellow-600 text-white hover:bg-yellow-700"
-                                        : "bg-green-600 text-white hover:bg-green-700"
+                                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors w-full sm:w-auto ${user.is_active
+                                        ? "bg-yellow-500 text-white hover:bg-yellow-600"
+                                        : "bg-green-500 text-white hover:bg-green-600"
                                         }`}
                                 >
                                     {user.is_active ? "Deactivate" : "Activate"}
@@ -157,7 +178,7 @@ export default function UsersSection({ isSuperAdmin }: { isSuperAdmin: boolean }
                                             }
                                             handleChangeRole(user.id, user.role_id === 1 ? 2 : 1)
                                         }}
-                                        className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
+                                        className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium w-full sm:w-auto"
                                         disabled={user.role_id === 0}
                                     >
                                         Make {user.role_id === 1 ? "User" : "Admin"}
@@ -165,15 +186,15 @@ export default function UsersSection({ isSuperAdmin }: { isSuperAdmin: boolean }
                                 )}
                                 <button
                                     onClick={() => handleDelete(user.id)}
-                                    className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-medium w-full sm:w-auto"
                                 >
                                     Delete
                                 </button>
                             </div>
                         </div>
-                    ))}
-                </div>
-            )}
+                    ))
+                )}
+            </div>
         </div>
     )
 }
