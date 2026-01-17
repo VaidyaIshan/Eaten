@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { useAuth } from "@/src/hooks/useAuth"
 import StarsAndMoon from "@/src/app/assets/vectors/starsandmoon"
-import { ArrowLeft } from "lucide-react"
+import Navbar from "@/src/app/components/Navbar/navbar"
 
 interface MealSession {
   id: string
@@ -137,17 +137,9 @@ export default function MealSessionsPage() {
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
             <StarsAndMoon />
           </div>
-          <div className="flex justify-between items-center z-10 relative mb-2">
-            <button
-              onClick={() => router.push('/events')}
-              className="p-2 -ml-2 hover:bg-white/10 rounded-full transition text-white flex items-center gap-2"
-            >
-              <ArrowLeft size={24} />
-              <span className="text-sm font-medium">Back</span>
-            </button>
-          </div>
-          <div className="relative z-10 mt-2">
-            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-1">
+          <Navbar/>
+          <div className="relative z-10 mt-20">
+            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-2">
               HAVE YOU
             </h6>
             <h1 className="text-5xl font-bold">
@@ -163,8 +155,8 @@ export default function MealSessionsPage() {
 
           {event && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">{event.name}</h2>
-              <p className="text-gray-600 leading-relaxed text-sm">{event.description}</p>
+              <h2 className="text-2xl font-bold text-black mb-2">{event.name}</h2>
+              <p className="text-black leading-relaxed text-sm">{event.description}</p>
             </div>
           )}
 
@@ -193,8 +185,8 @@ export default function MealSessionsPage() {
                       </h3>
                       <span
                         className={`px-3 py-0.5 rounded-full text-xs font-medium border ${session.is_active
-                            ? "bg-white text-green-600 border-green-500"
-                            : "bg-white text-red-500 border-red-500"
+                          ? "bg-white text-green-600 border-green-500"
+                          : "bg-white text-red-500 border-red-500"
                           }`}
                       >
                         {session.is_active ? "Ongoing" : "Ended"}
@@ -202,13 +194,13 @@ export default function MealSessionsPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-3 mb-6 text-sm text-gray-600">
+                  <div className="space-y-3 mb-6 text-sm text-black">
                     <div className="grid grid-cols-[80px_1fr]">
-                      <span className="font-medium text-gray-900">Start Time:</span>
+                      <span className="font-medium text-black">Start Time:</span>
                       <span>{new Date(session.start_time).toLocaleString().split(",")[1]}</span>
                     </div>
                     <div className="grid grid-cols-[80px_1fr]">
-                      <span className="font-medium text-gray-900">End Time:</span>
+                      <span className="font-medium text-black">End Time:</span>
                       <span>{new Date(session.end_time).toLocaleString().split(",")[1]}</span>
                     </div>
                   </div>
@@ -218,8 +210,8 @@ export default function MealSessionsPage() {
                       onClick={() => handleMealSessionClick(session)}
                       disabled={!session.is_active}
                       className={`px-6 py-2.5 rounded-md font-medium text-white shadow-sm transition-all text-sm ${session.is_active
-                          ? "bg-primary hover:bg-[#4a3ea3] active:scale-[0.98]"
-                          : "bg-[#8b82c9] cursor-not-allowed"
+                        ? "bg-primary hover:bg-[#4a3ea3] active:scale-[0.98]"
+                        : "bg-[#8b82c9] cursor-not-allowed"
                         }`}
                     >
                       Get Your QR

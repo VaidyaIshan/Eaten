@@ -15,7 +15,7 @@ export default function LoginSection() {
   const router = useRouter()
 
   useEffect(() => {
-    if (user) router.push("/events")
+    if (user) router.push("/dashboard")
   }, [user, router])
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function LoginSection() {
 
       const data = await response.json()
       localStorage.setItem("token", data.access_token)
-      router.push("/events")
+      router.push("/dashboard")
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
@@ -62,7 +62,7 @@ export default function LoginSection() {
   }
 
   return (
-    <div className="absolute bottom-0 left-0 right-0 bg-[#FFC75F] w-full max-4xl rounded-t-[5.875rem] pt-3.75 pl-3.25 pr-3.25">
+    <div className="absolute bottom-0 left-0 right-0 bg-[#FFC75F] w-full max-4xl rounded-t-[5.875rem] pt-3.75 pl-3.25 pr-3.25 m-0">
       <div className="flex flex-col items-center justify-center bg-[#FBF7FF] bottom-0 h-[35rem] w-full rounded-t-[5.875rem] gap-4">
 
         <p className="absolute top-[85px] font-bold text-[32px] text-primary">Welcome back</p>
