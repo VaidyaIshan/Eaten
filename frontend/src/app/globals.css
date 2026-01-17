@@ -24,7 +24,7 @@
 
 body {
   background: linear-gradient(180deg, #6A5ACD 0%, #3A2F82 100%);
-  color: var(--color-foreground, #6A5ACD); /* Fallback to white */
+  color: var(--color-foreground, #6A5ACD); 
   font-family: var(--font-my-custom), sans-serif;
   min-height: 100vh;
   margin: 0;
