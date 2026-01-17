@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { useAuth } from "@/src/hooks/useAuth"
+import StarsAndMoon from "@/src/app/assets/vectors/starsandmoon"
+import { ArrowLeft } from "lucide-react"
 
 interface MealSession {
   id: string
@@ -58,9 +60,7 @@ export default function MealSessionsPage() {
         },
       })
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch event")
-      }
+      if (!res.ok) throw new Error("Failed to fetch event")
 
       const data: Event = await res.json()
       if (!data.is_active) {
@@ -96,9 +96,7 @@ export default function MealSessionsPage() {
         }
       )
 
-      if (!res.ok) {
-        throw new Error("Failed to fetch meal sessions")
-      }
+      if (!res.ok) throw new Error("Failed to fetch meal sessions")
 
       const data: MealSession[] = await res.json()
       setMealSessions(data)
@@ -127,80 +125,111 @@ export default function MealSessionsPage() {
 
   if (loading || fetching)
     return (
-      <div className="flex justify-center items-center h-screen text-xl font-bold">
+      <div className="flex justify-center items-center h-screen text-xl font-bold text-purple-700">
         Loading...
       </div>
     )
 
   return (
-    <div className="min-h-screen p-6">
-      <div className="max-w-4xl mx-auto">
-        <button
-          onClick={() => router.push("/events")}
-          className="mb-4 text-blue-600 hover:underline"
-        >
-          ← Back to Events
-        </button>
-
-        {event && (
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold mb-2">{event.name}</h1>
-            <p className="text-gray-600">{event.description}</p>
+    <div className="min-h-screen bg-white flex flex-col items-center">
+      <div className="w-full bg-white min-h-screen relative">
+        <div className="bg-primary text-white p-6 h-60 relative overflow-hidden">
+          <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
+            <StarsAndMoon />
           </div>
-        )}
-
-        <h2 className="text-2xl font-bold mb-4">Meal Sessions</h2>
-
-        {mealSessions.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-xl">No meal sessions available for this event</p>
+          <div className="flex justify-between items-center z-10 relative mb-2">
+            <button
+              onClick={() => router.push('/events')}
+              className="p-2 -ml-2 hover:bg-white/10 rounded-full transition text-white flex items-center gap-2"
+            >
+              <ArrowLeft size={24} />
+              <span className="text-sm font-medium">Back</span>
+            </button>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {mealSessions.map((session) => (
-              <div
-                key={session.id}
-                onClick={() => handleMealSessionClick(session)}
-                className={`bg-white rounded-lg shadow-md p-6 transition-shadow ${session.is_active
-                    ? "cursor-pointer hover:shadow-lg"
-                    : "cursor-not-allowed opacity-60"
-                  }`}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-bold">{session.meal_type}</h3>
-                  <span
-                    className={`px-2 py-1 rounded text-sm ${session.is_active
-                        ? "bg-green-100 text-green-800"
-                        : "bg-gray-100 text-gray-800"
-                      }`}
-                  >
-                    {session.is_active ? "Active" : "Inactive"}
-                  </span>
-                </div>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <p>
-                    <strong>Start:</strong>{" "}
-                    {new Date(session.start_time).toLocaleString()}
-                  </p>
-                  <p>
-                    <strong>End:</strong>{" "}
-                    {new Date(session.end_time).toLocaleString()}
-                  </p>
-                  <p>
-                    <strong>Capacity:</strong> {session.total_capacity}
-                  </p>
-                </div>
-                <div className="mt-4 pt-4 border-t">
-                  {session.is_active ? (
-                    <p className="text-blue-600 font-medium">Click to view QR code</p>
-                  ) : (
-                    <p className="text-gray-500 font-medium">QR code unavailable (inactive)</p>
-                  )}
-                </div>
-              </div>
-            ))}
+          <div className="relative z-10 mt-2">
+            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-1">
+              HAVE YOU
+            </h6>
+            <h1 className="text-5xl font-bold">
+              Eaten?
+            </h1>
           </div>
-        )}
+        </div>
+        <div className="w-full h-3 bg-[#FFC55A]"></div>
+
+
+        <div className="p-6">
+
+
+          {event && (
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">{event.name}</h2>
+              <p className="text-gray-600 leading-relaxed text-sm">{event.description}</p>
+            </div>
+          )}
+
+
+          <h3 className="text-lg font-bold text-black mb-4 border-b pb-2 border-gray-100">
+            Available Sessions
+          </h3>
+
+          {mealSessions.length === 0 ? (
+            <div className="text-center py-12 text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+              <p>No meal sessions available for this event</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {mealSessions.map((session) => (
+                <div
+                  key={session.id}
+                  className={`bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all ${!session.is_active ? "opacity-70 bg-gray-50" : "hover:shadow-md"
+                    }`}
+                >
+
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                      <h3 className="text-xl font-bold text-gray-800">
+                        {session.meal_type}
+                      </h3>
+                      <span
+                        className={`px-3 py-0.5 rounded-full text-xs font-medium border ${session.is_active
+                            ? "bg-white text-green-600 border-green-500"
+                            : "bg-white text-red-500 border-red-500"
+                          }`}
+                      >
+                        {session.is_active ? "Ongoing" : "Ended"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3 mb-6 text-sm text-gray-600">
+                    <div className="grid grid-cols-[80px_1fr]">
+                      <span className="font-medium text-gray-900">Start Time:</span>
+                      <span>{new Date(session.start_time).toLocaleString().split(",")[1]}</span>
+                    </div>
+                    <div className="grid grid-cols-[80px_1fr]">
+                      <span className="font-medium text-gray-900">End Time:</span>
+                      <span>{new Date(session.end_time).toLocaleString().split(",")[1]}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end">
+                    <button
+                      onClick={() => handleMealSessionClick(session)}
+                      disabled={!session.is_active}
+                      className={`px-6 py-2.5 rounded-md font-medium text-white shadow-sm transition-all text-sm ${session.is_active
+                          ? "bg-primary hover:bg-[#4a3ea3] active:scale-[0.98]"
+                          : "bg-[#8b82c9] cursor-not-allowed"
+                        }`}
+                    >
+                      Get Your QR
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/src/hooks/useAuth"
+import StarsAndMoon from "../assets/vectors/starsandmoon"
+import { Menu, ChevronDown, ChevronUp } from "lucide-react"
 
 interface Event {
   id: string
@@ -74,60 +76,86 @@ export default function EventsPage() {
     )
 
   return (
-    <div className="min-h-screen p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Events</h1>
-          {(user?.role_id === 1 || user?.role_id === 0) && (
-            <button
-              onClick={() => router.push("/admin")}
-              className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700"
-            >
-              Admin Panel
-            </button>
+    <div className="min-h-screen bg-white flex flex-col items-center">
+      <div className="w-full bg-white min-h-screen relative">
+        <div className="bg-primary w-full h-60 text-white p-6 relative overflow-hidden">
+          <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
+            <StarsAndMoon />
+          </div>
+          <div className="flex justify-end relative z-10 min-h-8">
+            {(user?.role_id === 1 || user?.role_id === 0) && (
+              <button
+                onClick={() => router.push("/admin")}
+                className="text-xs bg-white/20 px-3 py-1 rounded-full hover:bg-white/30 transition backdrop-blur-sm border border-white/10"
+              >
+                Admin Panel
+              </button>
+            )}
+          </div>
+          <div className="relative z-10 mt-2">
+            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-1">
+              HAVE YOU
+            </h6>
+            <h1 className="text-5xl font-bold">
+              Eaten?
+            </h1>
+          </div>
+        </div>
+        <div className="w-full h-3 bg-[#FFC55A]"></div>
+
+        <div className="space-y-4">
+  {events.map((event) => (
+    <div
+      key={event.id}
+      className="bg-white rounded-xl  border border-gray-100 p-5  hover:shadow-md"
+    >
+
+      <div className="flex items-center gap-4 mb-4">
+        <div className="w-12 h-12 rounded-full bg-purple-100 overflow-hidden border border-gray-200">
+          {event.picture ? (
+            <img
+              src={event.picture}
+              alt={event.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-purple-500 font-bold text-lg">
+              {event.name.charAt(0)}
+            </div>
           )}
         </div>
-        
-        {events.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-xl">No events available</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((event) => (
-              <div
-                key={event.id}
-                onClick={() => router.push(`/events/${event.id}/meal-sessions`)}
-                className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
-              >
-                {event.picture && (
-                  <img
-                    src={event.picture}
-                    alt={event.name}
-                    className="w-full h-48 object-cover rounded-md mb-4"
-                  />
-                )}
-                <h2 className="text-xl font-bold mb-2">{event.name}</h2>
-                <p className="text-gray-600 mb-4 line-clamp-2">{event.description}</p>
-                <div className="flex justify-between items-center text-sm text-gray-500">
-                  <span>
-                    {new Date(event.start_date).toLocaleDateString()} -{" "}
-                    {new Date(event.end_date).toLocaleDateString()}
-                  </span>
-                  <span
-                    className={`px-2 py-1 rounded ${
-                      event.is_active
-                        ? "bg-green-100 text-green-800"
-                        : "bg-gray-100 text-gray-800"
-                    }`}
-                  >
-                    {event.is_active ? "Active" : "Inactive"}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        <h3 className="font-bold text-lg text-gray-800">
+          {event.name}
+        </h3>
+      </div>
+
+      <hr className="mb-4 border-gray-100" />
+
+
+      <div className="mb-4 text-sm text-gray-600 space-y-2">
+        <div className="flex justify-between items-center">
+          <span className="font-medium text-gray-900">Start Date:</span>
+          <span>{new Date(event.start_date).toLocaleDateString()}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="font-medium text-gray-900">End Date:</span>
+          <span>{new Date(event.end_date).toLocaleDateString()}</span>
+        </div>
+      </div>
+
+      <p className="mb-6 text-gray-600 text-sm leading-relaxed">
+        {event.description}
+      </p>
+
+      <button
+        onClick={() => router.push(`/events/${event.id}/meal-sessions`)}
+        className="w-full bg-[#5B4DBC] text-white font-medium py-3 rounded-lg hover:bg-[#4a3ea3] transition-colors shadow-sm text-sm"
+      >
+        Meal Session
+      </button>
+    </div>
+  ))}
+</div>
       </div>
     </div>
   )

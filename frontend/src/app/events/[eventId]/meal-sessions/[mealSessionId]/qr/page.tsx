@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { useAuth } from "@/src/hooks/useAuth"
 import QRCode from "react-qr-code"
-import QrPage from "@/src/app/qr/page"
+import StarsAndMoon from "@/src/app/assets/vectors/starsandmoon"
+import { ArrowLeft } from "lucide-react"
 
 interface MealSession {
   id: string
@@ -99,7 +100,6 @@ export default function QRCodePage() {
         }
         setMealSession(mealData)
 
-        // Generate QR code
         const qrString = `${user.id}+${mealSessionId}`
         setQrCode(qrString)
       } catch (err) {
@@ -122,51 +122,63 @@ export default function QRCodePage() {
     )
 
   return (
-    <div className="min-h-screen p-6 flex items-center justify-center">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
-        <button
-          onClick={() => router.push(`/events/${eventId}/meal-sessions`)}
-          className="mb-6 text-blue-600 hover:underline"
-        >
-          ← Back to Meal Sessions
-        </button>
-
-        <h1 className="text-2xl font-bold mb-6 text-center">QR Code</h1>
-
-        {qrCode ? (
-          <div className="flex flex-col items-center space-y-4">
-            <div className="bg-white p-4 rounded-lg border-2 border-gray-200">
-              <QRCode value={qrCode} size={256} />
-            </div>
-            {/* <p className="text-sm text-gray-600 text-center break-all">
-              {qrCode}
-            </p> */}
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center">
+      <div className="w-full bg-white min-h-screen relative">
+        <div className="bg-[#5B4DBC] w-full h-60 text-white p-6 relative overflow-hidden">
+          <div className="flex justify-between items-center z-10 relative mb-2">
             <button
-              onClick={() => {
-                const svgElement = document.querySelector("svg")
-                if (svgElement) {
-                  const svgData = new XMLSerializer().serializeToString(svgElement)
-                  const blob = new Blob([svgData], { type: "image/svg+xml" })
-                  const url = URL.createObjectURL(blob)
-                  const link = document.createElement("a")
-                  link.href = url
-                  link.download = `qr-code-${mealSessionId}.svg`
-                  document.body.appendChild(link)
-                  link.click()
-                  document.body.removeChild(link)
-                  URL.revokeObjectURL(url)
-                }
-              }}
-              className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
+              onClick={() => router.push(`/events/${eventId}/meal-sessions`)}
+              className="p-2 -ml-2 hover:bg-white/10 rounded-full transition text-white flex items-center gap-2"
             >
-              Download QR Code
+              <ArrowLeft size={24} />
+              <span className="text-sm font-medium">Back</span>
             </button>
           </div>
-        ) : (
-          <div className="text-center py-8">
-            <p className="text-gray-600">No QR code available</p>
+          <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
+            <StarsAndMoon />
           </div>
-        )}
+          <div className="relative z-10 mt-2">
+            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-1 uppercase">
+              HAVE YOU
+            </h6>
+            <h1 className="text-5xl font-bold">
+              Eaten?
+            </h1>
+          </div>
+        </div>
+
+        <div className="w-full h-3 bg-[#FFC55A]"></div>
+
+        <div className="p-8 flex flex-col items-center">
+
+          <div className="w-full bg-white rounded-xl shadow-lg border border-gray-100 p-8 flex flex-col items-center">
+
+            <h1 className="text-2xl text-[#5B4DBC] font-bold mb-8 text-center tracking-tight">
+              SCAN TO GET A MEAL
+            </h1>
+
+            {qrCode ? (
+              <div className="flex flex-col items-center space-y-6 w-full">
+                <div className="bg-white p-4 rounded-xl border-2 border-gray-100 shadow-inner">
+                  <div style={{ height: "auto", margin: "0 auto", maxWidth: 256, width: "100%" }}>
+                    <QRCode
+                      size={256}
+                      style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                      value={qrCode}
+                      viewBox={`0 0 256 256`}
+                    />
+                  </div>
+                </div>
+
+              </div>
+            ) : (
+              <div className="text-center py-12 bg-gray-50 rounded-lg w-full">
+                <p className="text-gray-500 font-medium">No QR code available</p>
+              </div>
+            )}
+          </div>
+        </div>
+
       </div>
     </div>
   )

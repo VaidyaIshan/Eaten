@@ -1,4 +1,69 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/src/hooks/useAuth"
+
+interface Feedback{
+  id: string
+  response: string
+  created_at: string
+  username: string
+}
+
 const GetAllFeedback = () => {
+
+  const router = useRouter()
+  const { user, loading, getToken } = useAuth()
+
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([])
+
+  const fetchFeedbacks = async() =>{
+    const token = getToken()
+
+    if(!token){
+      router.push("/LoginPage")
+      return 
+    }
+
+    try{
+
+      const res = await fetch(
+        "http://localhost:8000/Eaten/feedback/get-all-feedbacks",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
+      if(!res.ok){
+        throw new Error("Failed to fetch feedbacks")
+      }
+
+      const data: Feedback[] = await res.json()
+      setFeedbacks(data)
+
+    }catch(err){
+      console.error(err)
+      alert("Failed to fetch feedbacks")
+    }
+  }
+
+  // logic for redirection
+  useEffect(() =>{
+    if(!user && !loading){
+      router.push("/LoginPage")
+    }
+  },[user,router,loading])
+
+//check if user has loaded
+  useEffect(() =>{
+    if(user){
+      fetchFeedbacks()
+    }
+  },[user])
 
   return(
     <div className = "flex flex-grow flex-col w-full gap-[1rem]">
@@ -14,59 +79,28 @@ const GetAllFeedback = () => {
         </div>
       </div>
 
+
+      <div className = "w-full flex flex-col w-full gap-[10px]">
+
+      {feedbacks.map((f) => (
       <div className = "w-full flex-col w-full">
 
         <div className = "w-full flex flex-row items-center justify-start gap-[5px] pb-[5px]">
           <div className = "w-[1.125rem] h-[1.125rem] rounded-full bg-[#7466C9] flex text-center items-center justify-center">
-            <p className = "text-[10px]">A</p>
+            <p className = "text-[10px]" key={f.id}>{f.username[0]}</p>
           </div>
 
-          <p className = "text-[#000000] text-[10px]">@AryanShahi</p>
+          <p className = "text-[#000000] text-[10px]">@{f.username}</p>
         </div>
 
         <div className = "bg-[#F3F3F3] flex text-center items-center justify-start h-[1.125rem] p-[3px]">
           <p className = "text-[#000000] text-[10px]">
-            &gt; Eaten.
+            &gt; {f.response}
           </p>
         </div>
 
       </div>
-
-
-      <div className = "w-full flex-col w-full">
-
-        <div className = "w-full flex flex-row items-center justify-start gap-[5px] pb-[5px]">
-          <div className = "w-[1.125rem] h-[1.125rem] rounded-full bg-[#7466C9] flex text-center items-center justify-center">
-            <p className = "text-[10px]">A</p>
-          </div>
-
-          <p className = "text-[#000000] text-[10px]">@Azrael</p>
-        </div>
-
-        <div className = "bg-[#F3F3F3] flex text-center items-center justify-start h-[1.125rem] p-[3px]">
-          <p className = "text-[#000000] text-[10px]">
-            &gt; I feel quite hungry.
-          </p>
-        </div>
-
-      </div>
-
-      <div className = "w-full flex-col w-full">
-
-        <div className = "w-full flex flex-row items-center justify-start gap-[5px] pb-[5px]">
-          <div className = "w-[1.125rem] h-[1.125rem] rounded-full bg-[#7466C9] flex text-center items-center justify-center">
-            <p className = "text-[10px]">D</p>
-          </div>
-
-          <p className = "text-[#000000] text-[10px]">@DevilPhantom</p>
-        </div>
-
-        <div className = "bg-[#F3F3F3] flex text-center items-center justify-start h-[1.125rem] p-[3px]">
-          <p className = "text-[#000000] text-[10px]">
-            &gt; Idk here is some lorem text "Lorem ipsum dolor sit...
-          </p>
-        </div>
-
+      ))}
       </div>
 
       <div className = "w-full flex flex-col items-center">
