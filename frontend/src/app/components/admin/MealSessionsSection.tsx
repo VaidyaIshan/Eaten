@@ -62,7 +62,6 @@ export default function MealSessionsSection() {
 
     useEffect(() => {
         fetchMealSessions()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const handleCreate = async (e: React.FormEvent) => {
@@ -70,7 +69,6 @@ export default function MealSessionsSection() {
         const token = getToken()
         if (!token) return
 
-        // Get the selected event to validate date range
         const selectedEvent = events.find(e => e.name === formData.event_name)
         if (!selectedEvent) {
             alert("Please select an event")
@@ -303,11 +301,9 @@ export default function MealSessionsSection() {
                                                         // showPicker returns void, so just handle the fallback
                                                         endTimeRef.current?.click()
                                                     } catch (err) {
-                                                        // Fallback: click the input to trigger native picker
                                                         endTimeRef.current.click()
                                                     }
                                                 } else {
-                                                    // Fallback: click the input to trigger native picker
                                                     endTimeRef.current.click()
                                                 }
                                             }

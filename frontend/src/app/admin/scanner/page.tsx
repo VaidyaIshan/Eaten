@@ -79,7 +79,7 @@ export default function AdminScannerPage() {
     <div className="min-h-screen p-6 bg-gray-50">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6 flex justify-between items-center">
-          <h1 className="text-3xl font-bold">QR Code Scanner</h1>
+          <h1 className="text-3xl font-bold text-black">QR Code Scanner</h1>
           <div className="flex space-x-4">
             <button
               onClick={() => router.push("/admin")}
@@ -97,7 +97,7 @@ export default function AdminScannerPage() {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6">
-          <p className="text-gray-600 mb-4 text-center">
+          <p className="text-black mb-4 text-center">
             Scan a QR code to create a food claim
           </p>
           <div className="flex justify-center">

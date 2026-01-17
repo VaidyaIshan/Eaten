@@ -163,8 +163,8 @@ export default function MealSessionsPage() {
 
           {event && (
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">{event.name}</h2>
-              <p className="text-gray-600 leading-relaxed text-sm">{event.description}</p>
+              <h2 className="text-2xl font-bold text-black mb-2">{event.name}</h2>
+              <p className="text-black leading-relaxed text-sm">{event.description}</p>
             </div>
           )}
 
@@ -193,8 +193,8 @@ export default function MealSessionsPage() {
                       </h3>
                       <span
                         className={`px-3 py-0.5 rounded-full text-xs font-medium border ${session.is_active
-                            ? "bg-white text-green-600 border-green-500"
-                            : "bg-white text-red-500 border-red-500"
+                          ? "bg-white text-green-600 border-green-500"
+                          : "bg-white text-red-500 border-red-500"
                           }`}
                       >
                         {session.is_active ? "Ongoing" : "Ended"}
@@ -202,13 +202,13 @@ export default function MealSessionsPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-3 mb-6 text-sm text-gray-600">
+                  <div className="space-y-3 mb-6 text-sm text-black">
                     <div className="grid grid-cols-[80px_1fr]">
-                      <span className="font-medium text-gray-900">Start Time:</span>
+                      <span className="font-medium text-black">Start Time:</span>
                       <span>{new Date(session.start_time).toLocaleString().split(",")[1]}</span>
                     </div>
                     <div className="grid grid-cols-[80px_1fr]">
-                      <span className="font-medium text-gray-900">End Time:</span>
+                      <span className="font-medium text-black">End Time:</span>
                       <span>{new Date(session.end_time).toLocaleString().split(",")[1]}</span>
                     </div>
                   </div>
@@ -218,8 +218,8 @@ export default function MealSessionsPage() {
                       onClick={() => handleMealSessionClick(session)}
                       disabled={!session.is_active}
                       className={`px-6 py-2.5 rounded-md font-medium text-white shadow-sm transition-all text-sm ${session.is_active
-                          ? "bg-primary hover:bg-[#4a3ea3] active:scale-[0.98]"
-                          : "bg-[#8b82c9] cursor-not-allowed"
+                        ? "bg-primary hover:bg-[#4a3ea3] active:scale-[0.98]"
+                        : "bg-[#8b82c9] cursor-not-allowed"
                         }`}
                     >
                       Get Your QR
