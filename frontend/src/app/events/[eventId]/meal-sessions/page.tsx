@@ -146,8 +146,8 @@ export default function MealSessionsPage() {
               <span className="text-sm font-medium">Back</span>
             </button>
           </div>
-          <div className="relative z-10 mt-2">
-            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-1">
+          <div className="relative z-10 mt-20">
+            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-2">
               HAVE YOU
             </h6>
             <h1 className="text-5xl font-bold">

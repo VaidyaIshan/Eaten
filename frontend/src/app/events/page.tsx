@@ -89,8 +89,8 @@ export default function EventsPage() {
             )}
           </div>
 
-          <div className="relative z-10 mt-2">
-            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-1">
+          <div className="relative z-10 mt-20">
+            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-2">
               HAVE YOU
             </h6>
             <h1 className="text-5xl font-bold">Eaten?</h1>
@@ -169,11 +169,10 @@ export default function EventsPage() {
                     onClick={() =>
                       router.push(`/events/${event.id}/meal-sessions`)
                     }
-                    className="w-full bg-[#5B4DBC] text-white font-medium py-3 rounded-lg hover:bg-[#4a3ea3] transition-colors shadow-sm text-sm"
-                  >
+                    className="px-6 py-2.5 rounded-md font-medium text-white shadow-sm transition-all text-sm bg-primary hover:bg-[#4a3ea3] active:scale-[0.98]">
                     Meal Sessions
                   </button>
-                </div>
+                </div>  
               ))}
             </div>
           )}

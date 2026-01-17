@@ -124,7 +124,7 @@ export default function QRCodePage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center">
       <div className="w-full bg-white min-h-screen relative">
-        <div className="bg-[#5B4DBC] w-full h-60 text-white p-6 relative overflow-hidden">
+        <div className="bg-primary w-full h-60 text-white p-6 relative overflow-hidden">
           <div className="flex justify-between items-center z-10 relative mb-2">
             <button
               onClick={() => router.push(`/events/${eventId}/meal-sessions`)}
@@ -137,8 +137,8 @@ export default function QRCodePage() {
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
             <StarsAndMoon />
           </div>
-          <div className="relative z-10 mt-2">
-            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-1 uppercase">
+          <div className="relative z-10 mt-20">
+            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-2 uppercase">
               HAVE YOU
             </h6>
             <h1 className="text-5xl font-bold">
