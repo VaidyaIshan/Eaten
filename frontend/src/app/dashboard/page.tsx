@@ -1,13 +1,13 @@
 "use client"
 import React from "react"
-import DonutSVG from "./assets/vectors/Donut"
-import MoonSVG from "./assets/vectors/Moon"
+import DonutSVG from "../assets/vectors/Donut"
+import MoonSVG from "../assets/vectors/Moon"
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import Navbar from "./components/Navbar/navbar";
+import Navbar from "../components/Navbar/navbar";
 import Link from "next/link";
 
-export default function MainPage(){
+export default function Dashboard(){
     
 useGSAP(() => {
   gsap.from('.animate-entrance',{
@@ -67,13 +67,13 @@ useGSAP(() => {
 
                 <p className="text-[92px] font-bold text-white animate-entrance " >Eaten</p>
                 <p className="text-[28px] font-bold text-accent animate-entrance" >Where every bite feels unreal</p>
-               <Link href="/LoginPage">
+               <Link href="/events">
   <button
     className="
-      animate-login flex items-center gap-2 p-3 mt-[25px] font-bold  bg-accent text-black w-[100px] h-[50px] rounded-xl text-[20px] cursor-pointer
+      animate-login flex items-center gap-2 p-3 mt-[25px] font-bold  bg-accent text-black w-[110px] h-[50px] rounded-xl text-[20px] cursor-pointer
     "
   >
-    Login
+    Events
     <span className="login-arrow inline-flex">
     <svg
   className="w-5 h-5"
