@@ -15,7 +15,7 @@ export default function LoginSection() {
   const router = useRouter()
 
   useEffect(() => {
-    if (user) router.push("/events")
+    if (user) router.push("/dashboard")
   }, [user, router])
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function LoginSection() {
 
       const data = await response.json()
       localStorage.setItem("token", data.access_token)
-      router.push("/events")
+      router.push("/dashboard")
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {

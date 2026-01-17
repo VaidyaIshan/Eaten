@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useAuth } from "@/src/hooks/useAuth"
 import StarsAndMoon from "../assets/vectors/starsandmoon"
 import { Menu, ChevronDown, ChevronUp } from "lucide-react"
+import Navbar from "../components/Navbar/navbar";
 
 interface Event {
   id: string
@@ -25,14 +26,14 @@ export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([])
   const [fetching, setFetching] = useState(false)
 
-  // Redirect if user is null
+
   useEffect(() => {
     if (!loading && !user) {
       router.push("/LoginPage")
     }
   }, [loading, user, router])
 
-  // Fetch events
+
   const fetchEvents = async () => {
     const token = getToken()
     if (!token) {
@@ -77,6 +78,7 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center">
+      <Navbar/>
       <div className="w-full bg-white min-h-screen relative">
         <div className="bg-primary w-full h-60 text-white p-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
