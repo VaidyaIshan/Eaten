@@ -3,17 +3,16 @@ import LoginSection from "../components/LoginSection/login-section"
 export default function LoginPage(){
   return (
     <>
-      <div className = "flex flex-col items-center min-h-screen gap-4 overflow-hidden">
+      <div className="fixed right-[8px] top-[2rem] z-50">
+        <MoonSVG />
+      </div>
 
-        <div className = "absolute right-2 top-4">
-          <MoonSVG/>
-        </div>
+      <div className="min-h-screen flex flex-col justify-evenly items-center px-4">
+        <p className="font-bold text-[80px] leading-none text-center">
+          Eaten
+        </p>
 
-          <p className = "absolute font-bold text-[80px] leading-none top-[13rem]">Eaten</p>
-
-          <div className = "h-full w-full top-5rem">
-            <LoginSection/>
-          </div>
+        <LoginSection />
       </div>
     </>
   )
