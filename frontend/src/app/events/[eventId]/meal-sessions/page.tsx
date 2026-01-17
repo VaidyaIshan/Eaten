@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { useAuth } from "@/src/hooks/useAuth"
 import StarsAndMoon from "@/src/app/assets/vectors/starsandmoon"
-import { ArrowLeft } from "lucide-react"
+import Navbar from "@/src/app/components/Navbar/navbar"
 
 interface MealSession {
   id: string
@@ -137,17 +137,9 @@ export default function MealSessionsPage() {
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
             <StarsAndMoon />
           </div>
-          <div className="flex justify-between items-center z-10 relative mb-2">
-            <button
-              onClick={() => router.push('/events')}
-              className="p-2 -ml-2 hover:bg-white/10 rounded-full transition text-white flex items-center gap-2"
-            >
-              <ArrowLeft size={24} />
-              <span className="text-sm font-medium">Back</span>
-            </button>
-          </div>
-          <div className="relative z-10 mt-2">
-            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-1">
+          <Navbar/>
+          <div className="relative z-10 mt-20">
+            <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-2">
               HAVE YOU
             </h6>
             <h1 className="text-5xl font-bold">
