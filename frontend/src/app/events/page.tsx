@@ -105,96 +105,84 @@ export default function EventsPage() {
 
         <div className="w-full h-3 bg-[#FFC55A]"></div>
 
-        <div className="space-y-4">
-          {events.map((event) => (
-            <div
-              key={event.id}
-              className="bg-white rounded-xl  border border-gray-100 p-5  hover:shadow-md"
-            >
 
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 rounded-full bg-purple-100 overflow-hidden border border-gray-200">
-                  {event.picture ? (
-                    <img
-                      src={event.picture}
-                      alt={event.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-purple-500 font-bold text-lg">
-                      {event.name.charAt(0)}
-                    </div>
-                  )}
-                </div>
-                <h3 className="font-bold text-lg text-gray-800">
-                  {event.name}
-                </h3>
-              </div>
+        <div className="p-6">
+          <h3 className="text-lg font-bold text-black mb-4 border-b pb-2 border-gray-100">
+            Available Events
+          </h3>
 
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-black mb-4 border-b pb-2 border-gray-100">
-                  Available Events
-                </h3>
-
-                {events.length === 0 ? (
-                  <div className="text-center py-12 text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
-                    <p>No events available</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {events.map((event) => (
-                      <div
-                        key={event.id}
-                        className="bg-white rounded-xl border border-gray-100 p-5 transition-all hover:shadow-md"
-                      >
-
-                        <div className="flex items-center gap-4 mb-4">
-                          <div className="w-12 h-12 rounded-full bg-purple-100 overflow-hidden border border-gray-200">
-                            {event.picture ? (
-                              <img
-                                src={event.picture}
-                                alt={event.name}
-                                className="w-full h-full object-cover"
-                              />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center text-purple-500 font-bold text-lg">
-                                {event.name.charAt(0)}
-                              </div>
-                            )}
-                          </div>
-                          <h3 className="font-bold text-lg text-gray-800">
-                            {event.name}
-                          </h3>
-                        </div>
-
-                        <hr className="mb-4 border-gray-100" />
-
-
-                        <div className="mb-4 text-sm text-gray-600 space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="font-medium text-gray-900">Start Date:</span>
-                            <span>{new Date(event.start_date).toLocaleDateString()}</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="font-medium text-gray-900">End Date:</span>
-                            <span>{new Date(event.end_date).toLocaleDateString()}</span>
-                          </div>
-                        </div>
-
-                        <p className="mb-6 text-gray-600 text-sm leading-relaxed">
-                          {event.description}
-                        </p>
-
-                        <button
-                          onClick={() => router.push(`/events/${event.id}/meal-sessions`)}
-                          className="w-full bg-[#5B4DBC] text-white font-medium py-3 rounded-lg hover:bg-[#4a3ea3] transition-colors shadow-sm text-sm"
-                        >
-                          Meal Session
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-      </div>
+          {events.length === 0 ? (
+            <div className="text-center py-12 text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+              <p>No events available</p>
             </div>
-          )
+          ) : (
+            <div className="space-y-4">
+              {events.map((event) => (
+                <div
+                  key={event.id}
+                  className="bg-white rounded-xl border border-gray-100 p-5 transition-all hover:shadow-md"
+                >
+
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-purple-100 overflow-hidden border border-gray-200">
+                      {event.picture ? (
+                        <img
+                          src={event.picture}
+                          alt={event.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-purple-500 font-bold text-lg">
+                          {event.name.charAt(0)}
+                        </div>
+                      )}
+                    </div>
+                    <h3 className="font-bold text-lg text-gray-800">
+                      {event.name}
+                    </h3>
+                  </div>
+
+                  <hr className="mb-4 border-gray-100" />
+
+
+                  <div className="mb-4 text-sm text-gray-600 space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium text-gray-900">
+                        Start Date:
+                      </span>
+                      <span>
+                        {new Date(event.start_date).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-medium text-gray-900">
+                        End Date:
+                      </span>
+                      <span>
+                        {new Date(event.end_date).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+
+
+                  <p className="mb-6 text-gray-600 text-sm leading-relaxed">
+                    {event.description}
+                  </p>
+
+
+                  <button
+                    onClick={() =>
+                      router.push(`/events/${event.id}/meal-sessions`)
+                    }
+                    className="px-6 py-2.5 rounded-md font-medium text-white shadow-sm transition-all text-sm bg-primary hover:bg-[#4a3ea3] active:scale-[0.98]">
+                    Meal Sessions
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }

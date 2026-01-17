@@ -97,7 +97,7 @@ export default function AdminScannerPage() {
         </div>
 
         <div className="bg-white rounded-lg shadow-lg p-6">
-          <p className="text-black mb-4 text-center">
+          <p className="text-gray-600 mb-4 text-center">
             Scan a QR code to create a food claim
           </p>
           <div className="flex justify-center">
