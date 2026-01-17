@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import DonutSVG from "../assets/vectors/Donut";
 import { useAuth } from "@/src/hooks/useAuth"
 import { useRouter } from "next/navigation"
+import Navbar from "../components/Navbar/navbar";
 
 
 interface UserData {
@@ -14,6 +15,7 @@ interface UserData {
 
 
 export default function Profile() {
+
   const router = useRouter()
   const [userData, setUserData] = useState<UserData | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -107,7 +109,9 @@ const logout=()=>{
   
 
   return (
+    
     <div className="flex flex-col items-center p-10 bg-primary-gradient min-h-screen">
+          <Navbar />
       <div className="flex flex-col items-center  justify-center w-[300px]">
         <h1 className="font-bold text-2xl mb-6">My Profile</h1>
 
