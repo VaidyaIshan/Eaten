@@ -10,6 +10,7 @@ import MealSessionsSection from "../components/admin/MealSessionsSection"
 import FoodClaimsSection from "../components/admin/FoodClaimsSection"
 import UsersSection from "../components/admin/UsersSections"
 import FeedbacksSection from "../components/admin/FeedbacksSection"
+import Navbar from "../components/Navbar/navbar"
 
 
 type TabType = "events" | "mealsessions" | "users" | "feedbacks" | "foodclaims"
@@ -42,6 +43,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center">
+      <Navbar />
       <div className="w-full bg-white min-h-screen relative">
         <div className="bg-primary w-full h-60 text-white p-4 sm:p-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
