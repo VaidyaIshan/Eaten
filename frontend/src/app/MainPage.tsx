@@ -36,20 +36,6 @@ useGSAP(() => {
   })
 }, []);
 
-
-// useGSAP(() => {
-//   gsap.to('#moon', {
-//     scale: 1.05,
-//     filter: "drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))",
-//     duration: 3,
-//     repeat: -1,
-//     yoyo: true,
-//     ease: "sine.inOut"
-//   });
-// }, []);
-
-
-
     return (
         <>
             <div className="min-h-screen flex flex-col justify-center left-5 fixed top-[-50px] ">
