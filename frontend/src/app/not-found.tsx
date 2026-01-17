@@ -2,9 +2,11 @@ import React from "react"
 import Button from "./components/Button/button"
 import DonutSVG from "./assets/vectors/Donut"
 import MoonSVG from "./assets/vectors/Moon"
+import Navbar from "./components/Navbar/navbar"
 export default function NotFound(){
     return(
         <>
+        <Navbar/>
 
                 <div className="flex flex-col items-center justify-center min-h-screen gap-4">
                 <div className="fixed right-2 top-4">
