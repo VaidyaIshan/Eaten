@@ -75,9 +75,9 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center">
-      <Navbar/>
+      <Navbar />
       <div className="w-full bg-white min-h-screen relative">
- 
+
         <div className="bg-primary w-full h-60 text-white p-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
             <StarsAndMoon />
@@ -102,10 +102,10 @@ export default function EventsPage() {
           </div>
         </div>
 
-        
+
         <div className="w-full h-3 bg-[#FFC55A]"></div>
 
-        
+
         <div className="p-6">
           <h3 className="text-lg font-bold text-black mb-4 border-b pb-2 border-gray-100">
             Available Events
@@ -122,7 +122,7 @@ export default function EventsPage() {
                   key={event.id}
                   className="bg-white rounded-xl border border-gray-100 p-5 transition-all hover:shadow-md"
                 >
-               
+
                   <div className="flex items-center gap-4 mb-4">
                     <div className="w-12 h-12 rounded-full bg-purple-100 overflow-hidden border border-gray-200">
                       {event.picture ? (
@@ -144,7 +144,7 @@ export default function EventsPage() {
 
                   <hr className="mb-4 border-gray-100" />
 
-                  
+
                   <div className="mb-4 text-sm text-gray-600 space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="font-medium text-gray-900">
@@ -164,12 +164,12 @@ export default function EventsPage() {
                     </div>
                   </div>
 
-             
+
                   <p className="mb-6 text-gray-600 text-sm leading-relaxed">
                     {event.description}
                   </p>
 
-               
+
                   <button
                     onClick={() =>
                       router.push(`/events/${event.id}/meal-sessions`)
@@ -177,7 +177,7 @@ export default function EventsPage() {
                     className="px-6 py-2.5 rounded-md font-medium text-white shadow-sm transition-all text-sm bg-primary hover:bg-[#4a3ea3] active:scale-[0.98]">
                     Meal Sessions
                   </button>
-                </div>  
+                </div>
               ))}
             </div>
           )}
