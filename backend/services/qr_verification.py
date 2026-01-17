@@ -31,6 +31,8 @@ def process_qr_verification(qr_string: str, db: Session):
         "data": {
             "username": user.username,
             "meal": meal.meal_type,
+            "user_id":user.id,
+            "meal_id":meal.id,
          
         }
     }

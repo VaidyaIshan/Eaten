@@ -8,9 +8,11 @@ import { Scanner } from "@yudiel/react-qr-scanner"
 export default function AdminScannerPage() {
   const router = useRouter()
   const { user, loading, getToken } = useAuth()
+
   const [lastScanned, setLastScanned] = useState<string | null>(null)
-  const scannerRef = useRef<any>(null)
-  const isInitializedRef = useRef(false)
+  const [paused, setPaused] = useState(false)
+
+  const lastScannedRef = useRef<string | null>(null)
 
   useEffect(() => {
     if (!loading && (!user || (user.role_id !== 1 && user.role_id !== 0))) {
@@ -18,46 +20,77 @@ export default function AdminScannerPage() {
     }
   }, [loading, user, router])
 
-  const lastScannedRef = useRef<string | null>(null)
-
   const handleScan = async (detectedCodes: any[]) => {
-    if (!detectedCodes || detectedCodes.length === 0) return
+    if (paused || !detectedCodes || detectedCodes.length === 0) return
 
     const decodedText = detectedCodes[0].rawValue
 
-    // Prevent multiple scans of the same QR code
-    if (lastScannedRef.current === decodedText) {
-      return
-    }
+    // extra safety against duplicate scans
+    if (lastScannedRef.current === decodedText) return
 
-    lastScannedRef.current = decodedText
+    setPaused(true)
     setLastScanned(decodedText)
+    lastScannedRef.current = decodedText
 
     try {
       const token = await getToken()
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/qr/verify`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ qr_data: decodedText }),
-      })
 
-      if (response.ok) {
-        const data = await response.json()
-        alert(`✅ QR Code verified! User: ${data.username || data.email || 'Unknown'}`)
+      // First verify the QR code
+      const verifyResponse = await fetch(
+        `http://localhost:8000/Eaten/qr/verify`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ qr_string: decodedText }),
+        }
+      )
+
+      const verifyRes = await verifyResponse.json()
+      const verifyData = verifyRes.data
+      console.log(verifyData)
+
+      console.log(verifyData.user_id)
+      console.log(verifyData.meal_id)
+      if (verifyResponse.ok && verifyData.username) {
+        alert(`✅ QR Code verified! User: ${verifyData.username || verifyData.email || "Unknown"}`)
+
+        // Auto-create food claim using the meal session info from QR
+        try {
+          const claimResponse = await fetch(
+            `http://localhost:8000/Eaten/food-claim/scan?user_id=${verifyData.user_id}&meal_session_id=${verifyData.meal_id}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              }
+            }
+          )
+
+          if (claimResponse.ok) {
+            alert(`✅ Food claim created successfully for ${verifyData.username}!`)
+          } else {
+            const claimData = await claimResponse.json()
+            alert(`⚠️ QR verified but claim failed: ${claimData.detail || "Could not create food claim"}`)
+          }
+        } catch (claimError) {
+          console.error("Error creating food claim:", claimError)
+          alert(`⚠️ QR verified but claim creation failed`)
+        }
       } else {
-        const errorData = await response.json()
-        alert(`❌ Verification failed: ${errorData.detail || 'Invalid QR code'}`)
+        alert(`❌ QR Verification failed: ${verifyRes.detail || "Invalid QR code"}`)
       }
     } catch (error) {
       console.error("Error verifying QR code:", error)
       alert("❌ Network error. Please try again.")
     }
 
-    // Clear the scanned code after 3 seconds
+    // resume scanner after 3 seconds
     setTimeout(() => {
+      setPaused(false)
       setLastScanned(null)
       lastScannedRef.current = null
     }, 3000)
@@ -100,21 +133,15 @@ export default function AdminScannerPage() {
           <p className="text-gray-600 mb-4 text-center">
             Scan a QR code to create a food claim
           </p>
+
           <div className="flex justify-center">
             <Scanner
               onScan={handleScan}
-              components={{
-                finder: true,
-              }}
+              paused={paused}
+              components={{ finder: true }}
               styles={{
-                container: {
-                  width: 300,
-                  height: 300,
-                },
-                video: {
-                  width: 300,
-                  height: 300,
-                },
+                container: { width: 300, height: 300 },
+                video: { width: 300, height: 300 },
               }}
             />
           </div>
