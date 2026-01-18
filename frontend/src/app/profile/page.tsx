@@ -109,35 +109,68 @@ const logout=()=>{
   
 
   return (
-    
-    <div className="flex flex-col items-center p-10 bg-primary-gradient min-h-screen">
-          <Navbar />
-      <div className="flex flex-col items-center  justify-center w-[300px]">
-        <h1 className="font-bold text-2xl mb-6">My Profile</h1>
+ 
+  <div className="min-h-screen bg-primary-gradient">
+    <Navbar />
 
-    
-        <div className="rounded-full w-[159px] h-[159px] flex items-center justify-center shadow-lg mb-6 bg-gradient text-[100px] bg-profile-picture-gradient">
-          <p className="text-white text-[80px] font-bold">
-            {getInitials(userData?.username)}
-          </p>
+    <div className="flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md bg-white/90 backdrop-blur rounded-2xl shadow-xl p-8 relative mt-5">
+
+        {/* Title */}
+        <h1 className="text-2xl font-bold text-center mb-8 text-gray-800">
+          My Profile
+        </h1>
+
+        {/* Profile Avatar */}
+        <div className="flex justify-center mb-6">
+          <div className="rounded-full w-36 h-36 flex items-center justify-center shadow-md bg-profile-picture-gradient">
+            <p className="text-white text-5xl font-bold">
+              {getInitials(userData?.username)}
+            </p>
+          </div>
+        </div>
+
+       
+        <div className="space-y-4 text-gray-700">
+          <div className="flex justify-between border-b pb-2">
+            <span className="font-medium">Username</span>
+            <span>{userData?.username}</span>
+          </div>
+
+          <div className="flex justify-between border-b pb-2">
+            <span className="font-medium">Email</span>
+            <span className="truncate max-w-[180px] text-right">
+              {userData?.email}
+            </span>
+          </div>
+
+          <div className="flex justify-between border-b pb-2">
+            <span className="font-medium">Status</span>
+            <span
+              className={`font-semibold ${
+                userData?.is_active ? "text-green-600" : "text-red-500"
+              }`}
+            >
+              {userData?.is_active ? "Active" : "Inactive"}
+            </span>
+          </div>
         </div>
 
      
-        <p className=" text-xl mb-2  border-b-2 border-gray-400 ">
-          Username: {userData?.username}
-        </p>
-        <p className="text-xl mb-2 border-b-2 border-gray-400">Email: {userData?.email}</p>
-        <p className="text-xl border-b-2 border-gray-400">
-          Status: {userData?.is_active ? "Active" : "Inactive"}
-        </p>
-      </div>
-
-      <button onClick={logout}>Logout</button>
-
-      
-      <div className="bottom-0 right-0 fixed">
-        <DonutSVG />
+        <button
+          onClick={logout}
+          className="mt-8 w-full py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold transition duration-200"
+        >
+          Logout
+        </button>
       </div>
     </div>
+
+   
+    <div className="fixed bottom-0 right-0 opacity-80 pointer-events-none">
+      <DonutSVG />
+    </div>
+  </div>
+
   );
 }
