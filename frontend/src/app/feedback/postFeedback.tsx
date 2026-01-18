@@ -64,7 +64,7 @@ const PostFeedback = ({ setRefreshTrigger }: AddFeedbackProps) => {
 
       setReview("")
       // await fetchFeedbacks()
-      alert("Feedback submitted")
+      // alert("Feedback submitted")
       setRefreshTrigger(prev => !prev)
     } catch (err) {
       console.error(err)

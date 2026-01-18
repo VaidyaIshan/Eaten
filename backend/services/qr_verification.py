@@ -3,6 +3,7 @@ from fastapi import HTTPException
 import uuid
 from models.users import User 
 from models.meal_sessions import MealSession
+from models.events import Event
 
 def process_qr_verification(qr_string: str, db: Session):
     
@@ -21,7 +22,9 @@ def process_qr_verification(qr_string: str, db: Session):
         raise HTTPException(status_code=404, detail="User not found")
 
     meal = db.query(MealSession).filter(MealSession.id == meal_uuid).first()
-    if not meal:
+    meal_is_act = meal.is_active
+    event_is_act = meal.event.is_active
+    if not meal or not meal_is_act or not event_is_act:
         raise HTTPException(status_code=404, detail="Meal session not found")
 
 

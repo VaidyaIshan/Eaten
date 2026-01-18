@@ -53,7 +53,7 @@ const GetAllFeedback = ({ RefreshTrigger }: GetAllFeedbackProps) => {
 
     }catch(err){
       console.error(err)
-      alert("Failed to fetch feedbacks")
+      // alert("Failed to fetch feedbacks")
     }
   }
 
@@ -74,9 +74,9 @@ const GetAllFeedback = ({ RefreshTrigger }: GetAllFeedbackProps) => {
     <div className = "flex flex-grow flex-col w-full gap-[1rem]">
 
       <div className = "w-full flex flex-col">
-        <p className = "text-[#000000] text-[12px]">See what others are saying below!</p>
-        <div className = "w-full h-[2px] bg-[#7466C9] flex justify-end items-center rounded-sm">
-          <div className = "relative w-[3.75rem] h-[5px] bg-[#7466C9] rounded-[9px] right-[10px]">
+        <p className = "text-[#000000] lg:text-[23px] text-[12px]">See what others are saying below!</p>
+        <div className = "w-full h-[2px] bg-[#7466C9] flex justify-end">
+          <div className = "relative w-[3.75rem] h-[5px] bg-[#7466C9] rounded-[9px] bottom-[1px] right-[10px]">
             <div className = "hidden">
               {/* <p>placeholder</p> */}
             </div>
@@ -85,21 +85,21 @@ const GetAllFeedback = ({ RefreshTrigger }: GetAllFeedbackProps) => {
       </div>
 
 
-      <div className = "w-full flex flex-col w-full">
+      <div className = "w-full flex flex-col w-full gap-[20px]">
 
       {feedbacks.map((f) => (
-      <div className = "w-full flex-col w-full mt-2 mb-3">
+      <div className = "w-full flex-col w-full" key={f.id}>
 
         <div className = "w-full flex flex-row items-center justify-start gap-[5px] pb-[5px]">
-          <div className = "w-[1.125rem] h-[1.125rem] rounded-full bg-[#7466C9] flex text-center items-center justify-center">
-            <p className = "text-[12px]" key={f.id}>{f.username[0]}</p>
+          <div className = "lg:w-[2.125rem] lg:h-[2.125rem] w-[1.125rem] h-[1.125rem] rounded-full bg-[#7466C9] flex text-center items-center justify-center">
+            <p className = "lg:text-[20px] text-[10px]" >{f.username[0]}</p>
           </div>
 
-          <p className = "text-[#000000] text-[12px]">@{f.username}</p>
+          <p className = "text-[#000000] lg:text-[20px] text-[10px]">@{f.username}</p>
         </div>
 
-        <div className = "bg-[#D9D9D965] flex text-center items-center justify-start h-[1.125rem] p-[3px]">
-          <p className = "text-[#000000] text-[10px]">
+        <div className = "bg-[#F3F3F3] flex text-center items-center justify-start lg:h-[2.35rem] h-[1.125rem] p-[3px]">
+          <p className = "text-[#000000] lg:text-[15px] text-[10px]">
             &gt; {f.response}
           </p>
         </div>
@@ -114,7 +114,7 @@ const GetAllFeedback = ({ RefreshTrigger }: GetAllFeedbackProps) => {
               <p>placeholder</p>
           </div>
         </div>
-          <p className = "text-[#CCCCCC] text-[10px] italic">That's all for now...</p>
+          <p className = "text-[#CCCCCC] lg:text-[15px] text-[10px] italic">That's all for now...</p>
       </div>
     </div>
   )
