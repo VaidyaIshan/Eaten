@@ -49,8 +49,8 @@
             
 //             {/* Event Header */}
 //             <div className="p-6 flex-grow">
-//               <h2 className="text-xl font-bold text-gray-900 mb-2">{event.name}</h2>
-//               <p className="text-gray-600 text-sm line-clamp-3">
+//               <h2 className="text-xl font-bold text-black mb-2">{event.name}</h2>
+//               <p className="text-black text-sm line-clamp-3">
 //                 {event.description || "No description available."}
 //               </p>
 //             </div>
