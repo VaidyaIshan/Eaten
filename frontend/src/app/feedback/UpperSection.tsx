@@ -13,7 +13,7 @@ const UpperSection = () => {
         </p>
       </div>
 
-      <p className = "w-[11rem] text-[10px] text-center">
+      <p className = "w-[11rem] text-[13px] text-center">
         Tell us what you like, dislike, or what we can do better.
       </p>
       
