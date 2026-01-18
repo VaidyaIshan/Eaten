@@ -10,7 +10,7 @@ interface SidebarProps {
 }
 
 const navigationItems = [
- { label: "Home", href: "/" },
+ { label: "Home", href: "/dashboard" },
   { label: "Profile", href: "/profile" },
   { label: "Events", href: "/events" },
   { label: "Feedback", href: "/feedback" },
@@ -55,7 +55,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
      
       <aside
         className={`
-          lg:hidden fixed top-0 left-0 h-full w-64 bg-[#3A2F82] text-white z-50
+          lg:hidden fixed top-0 left-0 h-full w-64 bg-[#17002487] backdrop-blur-md text-white z-50
           shadow-2xl transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}

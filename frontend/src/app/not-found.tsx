@@ -1,9 +1,12 @@
+"use client"
 import React from "react"
 import Button from "./components/Button/button"
 import DonutSVG from "./assets/vectors/Donut"
 import MoonSVG from "./assets/vectors/Moon"
 import Navbar from "./components/Navbar/navbar"
+import { useRouter } from "next/navigation"
 export default function NotFound(){
+      const router = useRouter()
     return(
         <>
         <Navbar/>
@@ -15,10 +18,12 @@ export default function NotFound(){
                 <p className="font-bold text-[96px] leading-none">404</p>
                  <p className="font-bold text-[24px] text-accent "> Nothing seems to be here</p>
                 
-                 <Button 
-                 text="Go back to Home"
+                 <button
+                 onClick={() =>
+                      router.push(`/dashboard`)
+                    } 
                  className="bg-secondary border-8 border-solid border-accent h-[47px] w-[276px] rounded-xl   flex justify-center items-center font-extrabold"
-                 />
+                 >Go Back to Home Page</button>
                  <div className="fixed bottom-0 right-0">
                     <DonutSVG/>
                  </div>

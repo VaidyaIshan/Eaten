@@ -11,13 +11,19 @@ interface Feedback{
   username: string
 }
 
-const GetAllFeedback = () => {
+interface GetAllFeedbackProps {
+  RefreshTrigger: boolean
+}
+
+const GetAllFeedback = ({ RefreshTrigger }: GetAllFeedbackProps) => {
 
   const router = useRouter()
   const { user, loading, getToken } = useAuth()
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([])
 
+
+  
   const fetchFeedbacks = async() =>{
     const token = getToken()
 
@@ -63,17 +69,16 @@ const GetAllFeedback = () => {
     if(user){
       fetchFeedbacks()
     }
-  },[user])
-
+  },[user, RefreshTrigger])
   return(
     <div className = "flex flex-grow flex-col w-full gap-[1rem]">
 
       <div className = "w-full flex flex-col">
-        <p className = "text-[#000000] lg:text-[23px] text-[10px]">See what others are saying below!</p>
+        <p className = "text-[#000000] lg:text-[23px] text-[12px]">See what others are saying below!</p>
         <div className = "w-full h-[2px] bg-[#7466C9] flex justify-end">
           <div className = "relative w-[3.75rem] h-[5px] bg-[#7466C9] rounded-[9px] bottom-[1px] right-[10px]">
             <div className = "hidden">
-              <p>placeholder</p>
+              {/* <p>placeholder</p> */}
             </div>
           </div>
         </div>

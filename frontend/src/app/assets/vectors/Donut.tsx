@@ -1,7 +1,7 @@
 const DonutSVG = () => {
   return (
     <div>
-      <svg width="229" height="249" viewBox="0 0 229 249" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="229" height="249" viewBox="0 0 229 249" fill="none" xmlns="http://www.w3.org/2000/svg" className="lg:w-56 lg:h-56">
 <ellipse cx="170.584" cy="165.588" rx="170.584" ry="165.588" fill="#FF6FB5"/>
 <ellipse cx="178.911" cy="169.394" rx="162.257" ry="161.781" fill="#FFC75F"/>
 <ellipse cx="204.13" cy="190.569" rx="169.87" ry="165.826" fill="#FF6FB5"/>
