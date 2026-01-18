@@ -132,13 +132,13 @@ export default function MealSessionsPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center">
+          <Navbar/> 
       <div className="w-full bg-white min-h-screen relative">
         <div className="bg-primary text-white p-6 h-60 relative overflow-hidden">
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
             <StarsAndMoon />
           </div>
-          <Navbar/>
-          <div className="relative z-10 mt-20">
+          <div className="relative z-10 mt-28">
             <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-2">
               HAVE YOU
             </h6>
