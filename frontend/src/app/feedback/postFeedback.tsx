@@ -4,13 +4,18 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/src/hooks/useAuth"
 
-const PostFeedback = () => {
+interface AddFeedbackProps {
+  setRefreshTrigger: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const PostFeedback = ({ setRefreshTrigger }: AddFeedbackProps) => {
 
   const router = useRouter()
   const { user, loading, getToken } = useAuth()
 
   const [review, setReview] = useState("")
   const [submitting, setSubmitting] = useState(false)
+
 
   //feedback submission function
   const submitFeedback = async () => {
@@ -60,7 +65,7 @@ const PostFeedback = () => {
       setReview("")
       // await fetchFeedbacks()
       alert("Feedback submitted")
-
+      setRefreshTrigger(prev => !prev)
     } catch (err) {
       console.error(err)
       alert("Failed to submit Feedback")
