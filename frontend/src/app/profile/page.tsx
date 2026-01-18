@@ -114,10 +114,10 @@ const logout=()=>{
     <Navbar />
 
     <div className="flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white/90 backdrop-blur rounded-2xl shadow-xl p-8 relative mt-5">
+      <div className="w-full max-w-md rounded-2xl p-8 relative mt-5">
 
         {/* Title */}
-        <h1 className="text-2xl font-bold text-center mb-8 text-gray-800">
+        <h1 className="text-2xl font-bold text-center mb-8 text-white">
           My Profile
         </h1>
 
@@ -131,7 +131,7 @@ const logout=()=>{
         </div>
 
        
-        <div className="space-y-4 text-gray-700">
+        <div className="space-y-4 text-white">
           <div className="flex justify-between border-b pb-2">
             <span className="font-medium">Username</span>
             <span>{userData?.username}</span>
