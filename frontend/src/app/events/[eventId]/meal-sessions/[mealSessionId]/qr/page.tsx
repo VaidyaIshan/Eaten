@@ -128,6 +128,7 @@ export default function QRCodePage() {
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
             <StarsAndMoon />
           </div>
+          
           <div className="relative z-10 mt-28">
             <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-2 uppercase">
               HAVE YOU
