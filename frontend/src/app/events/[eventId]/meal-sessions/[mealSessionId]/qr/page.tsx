@@ -39,14 +39,13 @@ export default function QRCodePage() {
   const [checking, setChecking] = useState(true)
   const hasCheckedRef = useRef(false)
 
-  // Redirect if user is null
   useEffect(() => {
     if (!loading && !user) {
       router.push("/LoginPage")
     }
   }, [loading, user, router])
 
-  // Check event and meal session status
+
   useEffect(() => {
     if (!user || !mealSessionId || !eventId || hasCheckedRef.current) return
 
@@ -129,7 +128,8 @@ export default function QRCodePage() {
           <div className="absolute top-0 right-0 z-0 opacity-100 pointer-events-none">
             <StarsAndMoon />
           </div>
-          <div className="relative z-10 mt-20">
+          
+          <div className="relative z-10 mt-28">
             <h6 className="text-xs font-medium text-purple-200 tracking-widest mb-2 uppercase">
               HAVE YOU
             </h6>
