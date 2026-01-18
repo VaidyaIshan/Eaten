@@ -10,7 +10,7 @@ interface SidebarProps {
 }
 
 const navigationItems = [
- { label: "Home", href: "/" },
+ { label: "Home", href: "/dashboard" },
   { label: "Profile", href: "/profile" },
   { label: "Events", href: "/events" },
   { label: "Feedback", href: "/feedback" },

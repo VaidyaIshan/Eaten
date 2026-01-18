@@ -60,9 +60,9 @@ useGSAP(() => {
     return (
         <>
         <Navbar/>
-            <div className="min-h-screen flex flex-col justify-center left-5 fixed top-[-50px] ">
+            <div className="min-h-screen flex flex-col justify-center left-5 fixed top-[-50px] lg:left-20">
                 <div className="fixed right-2 top-4 animate-entrance-x-moon" id="moon">
-                    <MoonSVG/>
+                    <MoonSVG className=" lg:w-56 lg:h-56"/>
                 </div>
 
                 <p className="text-[92px] font-bold text-white animate-entrance " >Eaten</p>
@@ -70,16 +70,16 @@ useGSAP(() => {
                <Link href="/events">
   <button
     className="
-      animate-login flex items-center gap-2 p-3 mt-[25px] font-bold  bg-accent text-black w-[110px] h-[50px] rounded-xl text-[20px] cursor-pointer
+      animate-login flex items-center gap-2 mt-[25px] font-bold text-white text-[20px] cursor-pointer border border-white px-10 py-2 rounded-full
     "
   >
     Events
     <span className="login-arrow inline-flex">
     <svg
-  className="w-5 h-5"
-  fill="currentColor"
-  viewBox="0 0 24 24"
->
+      className="w-5 h-5"
+      fill="currentColor"
+      viewBox="0 0 24 24"
+    >
   <path d="M5 11h12.17l-4.88-4.88c-.39-.39-.39-1.02 0-1.41.39-.39 1.02-.39 1.41 0l6.59 6.59c.39.39.39 1.02 0 1.41l-6.59 6.59c-.39.39-1.02.39-1.41 0-.39-.39-.39-1.02 0-1.41L17.17 13H5c-.55 0-1-.45-1-1s.45-1 1-1z" />
 </svg>
     </span>

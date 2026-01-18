@@ -59,8 +59,7 @@ useGSAP(() => {
 
     return (
         <>
-        <Navbar/>
-            <div className="min-h-screen flex flex-col justify-center left-5 fixed top-[-50px] ">
+            <div className="min-h-screen flex flex-col justify-center left-5 fixed top-[-50px] lg:left-20">
                 <div className="fixed right-2 top-4 animate-entrance-x-moon" id="moon">
                     <MoonSVG/>
                 </div>
@@ -70,7 +69,7 @@ useGSAP(() => {
                <Link href="/LoginPage">
   <button
     className="
-      animate-login flex items-center gap-2 p-3 mt-[25px] font-bold  bg-accent text-black w-[100px] h-[50px] rounded-xl text-[20px] cursor-pointer
+      animate-login flex items-center gap-2 mt-[25px] font-bold text-white rounded-full text-[20px] cursor-pointer border-white border px-10 py-2 
     "
   >
     Login
