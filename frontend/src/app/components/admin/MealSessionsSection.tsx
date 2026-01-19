@@ -27,7 +27,7 @@ export default function MealSessionsSection() {
         setLoading(true)
         try {
             // Fetch all events first
-            const eventsRes = await fetch("http://localhost:8000/Eaten/event/", {
+            const eventsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -40,7 +40,7 @@ export default function MealSessionsSection() {
                 // Fetch meal sessions for all events
                 const allMealSessions: MealSession[] = []
                 for (const event of eventsData) {
-                    const res = await fetch(`http://localhost:8000/Eaten/meal-session/event/${event.id}`, {
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/meal-session/event/${event.id}`, {
                         headers: {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`,
@@ -97,7 +97,7 @@ export default function MealSessionsSection() {
 
         try {
             const res = await fetch(
-                `http://localhost:8000/Eaten/meal-session/?event_name=${encodeURIComponent(formData.event_name)}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/Eaten/meal-session/?event_name=${encodeURIComponent(formData.event_name)}`,
                 {
                     method: "POST",
                     headers: {
@@ -133,7 +133,7 @@ export default function MealSessionsSection() {
         if (!token) return
 
         try {
-            const res = await fetch(`http://localhost:8000/Eaten/meal-session/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/meal-session/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -154,7 +154,7 @@ export default function MealSessionsSection() {
         if (!token) return
 
         try {
-            const res = await fetch(`http://localhost:8000/Eaten/meal-session/activate/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/meal-session/activate/${id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,

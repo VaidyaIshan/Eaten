@@ -25,7 +25,7 @@ export function useAuth() {
 
         const fetchMe = async () => {
             try {
-                const res = await fetch("http://localhost:8000/Eaten/auth/me", {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/me`, {
                     headers: { Authorization: `Bearer ${token}` },
                 })
 

@@ -44,7 +44,7 @@ const PostFeedback = ({ setRefreshTrigger }: AddFeedbackProps) => {
     try {
 
       const res = await fetch(
-        "http://localhost:8000/Eaten/feedback/response",
+        `${process.env.NEXT_PUBLIC_API_URL}/Eaten/feedback/response`,
         {
           method: "POST",
           headers: {

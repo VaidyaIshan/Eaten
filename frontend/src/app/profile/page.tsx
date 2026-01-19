@@ -39,7 +39,7 @@ export default function Profile() {
           throw new Error("Not authenticated");
         }
 
-        const response = await fetch("http://localhost:8000/Eaten/auth/me", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/me`, {
           method: "GET",
           
           headers: {

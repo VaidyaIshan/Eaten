@@ -31,7 +31,7 @@ export default function EventsSection() {
 
         setLoading(true)
         try {
-            const res = await fetch("http://localhost:8000/Eaten/event/", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -59,7 +59,7 @@ export default function EventsSection() {
         if (!token) return
 
         try {
-            const res = await fetch("http://localhost:8000/Eaten/event/", {
+            const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export default function EventsSection() {
         if (!token) return
 
         try {
-            const res = await fetch(`http://localhost:8000/Eaten/event/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -109,7 +109,7 @@ export default function EventsSection() {
         if (!token) return
 
         try {
-            const res = await fetch(`http://localhost:8000/Eaten/event/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/${id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,

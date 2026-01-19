@@ -1,7 +1,4 @@
-version: "3.9"
-
 services:
-
   db:
     image: postgres:15
     container_name: eaten-db
@@ -21,19 +18,20 @@ services:
     restart: always
     env_file:
       - .env
+    environment:
+      - DB_HOST=db
     depends_on:
       - db
     ports:
       - "8000:8000"
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     container_name: eaten-frontend
     restart: always
-    env_file:
-      - .env
-    depends_on:
-      - backend
     ports:
       - "3000:3000"
 

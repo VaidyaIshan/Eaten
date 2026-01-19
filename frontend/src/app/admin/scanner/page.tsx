@@ -37,7 +37,7 @@ export default function AdminScannerPage() {
 
       // First verify the QR code
       const verifyResponse = await fetch(
-        `http://localhost:8000/Eaten/qr/verify`,
+        `${process.env.NEXT_PUBLIC_API_URL}/Eaten/qr/verify`,
         {
           method: "POST",
           headers: {
@@ -60,7 +60,7 @@ export default function AdminScannerPage() {
         // Auto-create food claim using the meal session info from QR
         try {
           const claimResponse = await fetch(
-            `http://localhost:8000/Eaten/food-claim/scan?user_id=${verifyData.user_id}&meal_session_id=${verifyData.meal_id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/Eaten/food-claim/scan?user_id=${verifyData.user_id}&meal_session_id=${verifyData.meal_id}`,
             {
               method: "POST",
               headers: {

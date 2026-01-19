@@ -60,7 +60,7 @@ export default function QRCodePage() {
       setChecking(true)
       try {
         // Check event status
-        const eventRes = await fetch(`http://localhost:8000/Eaten/event/${eventId}`, {
+        const eventRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/${eventId}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
@@ -80,7 +80,7 @@ export default function QRCodePage() {
         setEvent(eventData)
 
         // Check meal session status
-        const mealRes = await fetch(`http://localhost:8000/Eaten/meal-session/${mealSessionId}`, {
+        const mealRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/meal-session/${mealSessionId}`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
