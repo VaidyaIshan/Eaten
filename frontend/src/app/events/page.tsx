@@ -43,7 +43,7 @@ export default function EventsPage() {
 
     setFetching(true)
     try {
-      const res = await fetch("http://localhost:8000/Eaten/event/", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

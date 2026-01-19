@@ -1,16 +1,10 @@
-from dotenv import load_dotenv,dotenv_values
+from dotenv import load_dotenv
 import os
 
-load_dotenv() # Loading all enV variables from .env file
+load_dotenv()
 
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-# config = {
-#     **dotenv_values(".env"),  #For Loading all ENV variables as dict
-# }
-# print(config)
-
-SUPABASE_DIRECT_URI = os.getenv('CONNECTION')  # For Loading Single ENV variableS
-SECRET_KEY = os.getenv('SECRET_KEY')
-ALGORITHM = os.getenv('ALGORITHM')
-TOKEN_EXPIRES = int(os.getenv('TOKEN_EXPIRES'))
-
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+TOKEN_EXPIRES = int(os.getenv("TOKEN_EXPIRES"))
