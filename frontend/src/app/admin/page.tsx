@@ -10,10 +10,11 @@ import MealSessionsSection from "../components/admin/MealSessionsSection"
 import FoodClaimsSection from "../components/admin/FoodClaimsSection"
 import UsersSection from "../components/admin/UsersSections"
 import FeedbacksSection from "../components/admin/FeedbacksSection"
+import UserSeederSection from "../components/admin/UserSeederSection"
 import Navbar from "../components/Navbar/navbar"
 
 
-type TabType = "events" | "mealsessions" | "users" | "feedbacks" | "foodclaims"
+type TabType = "events" | "mealsessions" | "users" | "feedbacks" | "foodclaims" | "user-seeder"
 
 export default function AdminPage() {
   const router = useRouter()
@@ -83,6 +84,7 @@ export default function AdminPage() {
               { id: "events" as TabType, label: "Events" },
               { id: "mealsessions" as TabType, label: "Meal Sessions" },
               { id: "users" as TabType, label: "Users" },
+              { id: "user-seeder" as TabType, label: "Seed Users" },
               { id: "feedbacks" as TabType, label: "Feedbacks" },
               { id: "foodclaims" as TabType, label: "Food Claims" },
             ].map((tab) => (
@@ -104,6 +106,7 @@ export default function AdminPage() {
             {activeTab === "events" && <EventsSection />}
             {activeTab === "mealsessions" && <MealSessionsSection />}
             {activeTab === "users" && <UsersSection isSuperAdmin={isSuperAdmin} />}
+            {activeTab === "user-seeder" && <UserSeederSection />}
             {activeTab === "feedbacks" && <FeedbacksSection />}
             {activeTab === "foodclaims" && <FoodClaimsSection />}
           </div>
