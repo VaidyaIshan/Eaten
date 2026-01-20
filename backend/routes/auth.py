@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, File, UploadFile, HTTPException
 from sqlalchemy.orm import Session
 from db import get_db
 from schemas.auth_schemas import UserRegister, UserResponse, Token
@@ -10,6 +10,8 @@ from services.update_roles import update_role_id
 from schemas.update_role_schemas import UserRoleUpdate
 from services.user_services import set_is_active, get_all_users
 from services.create_superadmin import create_superadmin
+from services.user_seeder import UserSeederService
+from schemas.user_seeder_schemas import UserSeederResponse
 import uuid
 from fastapi.security import OAuth2PasswordRequestForm
 from typing import List
@@ -66,5 +68,28 @@ def change_is_active(user_id: uuid.UUID, db: Session = Depends(get_db)):
 def get_logged_in_user(current_user:User=Depends(get_current_user)):
     return current_user
 
+@router.post("/seed-users", response_model=UserSeederResponse)
+def seed_users_from_excel(
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Seed users from an Excel file.
+    Only accessible to admin users (role_id >= 1).
     
-
+    Excel file should have columns: username, email, password
+    Optional columns: role_id, is_active
+    """
+    # Check if user is admin or superadmin
+    if current_user.role_id not in [0, 1]:
+        raise HTTPException(status_code=403, detail="Only admins can seed users")
+    
+    # Read file
+    file_bytes = file.file.read()
+    
+    if not file_bytes:
+        raise HTTPException(status_code=400, detail="File is empty")
+    
+    # Seed users
+    return UserSeederService.seed_users(file_bytes, db)
