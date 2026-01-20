@@ -72,7 +72,7 @@ export default function UserSeederSection() {
       const formData = new FormData()
       formData.append("file", file)
 
-      const res = await fetch("http://localhost:8000/Eaten/auth/seed-users", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/seed-users`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

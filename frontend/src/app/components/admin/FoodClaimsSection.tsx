@@ -17,7 +17,7 @@ export default function FoodClaimsSection() {
         if (!token) return
 
         try {
-            const res = await fetch("http://localhost:8000/Eaten/auth/users", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/users`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -37,7 +37,7 @@ export default function FoodClaimsSection() {
         if (!token) return
 
         try {
-            const res = await fetch("http://localhost:8000/Eaten/event/", {
+            const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/", {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -58,7 +58,7 @@ export default function FoodClaimsSection() {
 
         setLoading(true)
         try {
-            const res = await fetch("http://localhost:8000/Eaten/food-claim/", {
+            const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/Eaten/food-claim/", {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ export default function FoodClaimsSection() {
         if (!token) return
 
         try {
-            const res = await fetch(`http://localhost:8000/Eaten/food-claim/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/food-claim/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,

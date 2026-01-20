@@ -53,7 +53,7 @@ export default function MealSessionsPage() {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/Eaten/event/${eventId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/${eventId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -87,7 +87,7 @@ export default function MealSessionsPage() {
     setFetching(true)
     try {
       const res = await fetch(
-        `http://localhost:8000/Eaten/meal-session/event/${eventId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/Eaten/meal-session/event/${eventId}`,
         {
           headers: {
             "Content-Type": "application/json",

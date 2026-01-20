@@ -35,7 +35,7 @@ const GetAllFeedback = ({ RefreshTrigger }: GetAllFeedbackProps) => {
     try{
 
       const res = await fetch(
-        "http://localhost:8000/Eaten/feedback/get-all-feedbacks",
+        `${process.env.NEXT_PUBLIC_API_URL}/Eaten/feedback/get-all-feedbacks`,
         {
           headers: {
             "Content-Type": "application/json",

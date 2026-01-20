@@ -13,7 +13,7 @@ export default function UsersSection({ isSuperAdmin }: { isSuperAdmin: boolean }
 
         setLoading(true)
         try {
-            const res = await fetch("http://localhost:8000/Eaten/auth/users", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/users`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ export default function UsersSection({ isSuperAdmin }: { isSuperAdmin: boolean }
         if (!token) return
 
         try {
-            const res = await fetch(`http://localhost:8000/Eaten/auth/delete/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/delete/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ export default function UsersSection({ isSuperAdmin }: { isSuperAdmin: boolean }
         if (!token) return
 
         try {
-            const res = await fetch(`http://localhost:8000/Eaten/auth/users/isActive/${id}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/users/isActive/${id}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -97,7 +97,7 @@ export default function UsersSection({ isSuperAdmin }: { isSuperAdmin: boolean }
         if (!token) return
 
         try {
-            const res = await fetch(`http://localhost:8000/Eaten/auth/users/${id}?new_role_id=${newRoleId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/users/${id}?new_role_id=${newRoleId}`, {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,
