@@ -59,7 +59,7 @@ export default function EventsSection() {
         if (!token) return
 
         try {
-            const res = await fetch("${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/event/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
