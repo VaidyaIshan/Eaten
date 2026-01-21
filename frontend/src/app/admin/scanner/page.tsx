@@ -20,7 +20,7 @@ export default function AdminScannerPage() {
     }
   }, [loading, user, router])
 
-  const handleScan = async (detectedCodes: any[]) => {
+  const handleScan = async (detectedCodes: { rawValue: string }[]) => {
     if (paused || !detectedCodes || detectedCodes.length === 0) return
 
     const decodedText = detectedCodes[0].rawValue
@@ -50,11 +50,10 @@ export default function AdminScannerPage() {
 
       const verifyRes = await verifyResponse.json()
       const verifyData = verifyRes.data
-      console.log(verifyData)
 
-      console.log(verifyData.user_id)
-      console.log(verifyData.meal_id)
-      if (verifyResponse.ok && verifyData.username) {
+      if (verifyResponse.ok && verifyData) {
+        console.log("Verification Data:", verifyData)
+
         alert(`✅ QR Code verified! User: ${verifyData.username || verifyData.email || "Unknown"}`)
 
         // Auto-create food claim using the meal session info from QR
