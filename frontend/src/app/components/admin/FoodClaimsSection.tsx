@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "@/src/hooks/useAuth"
-import { FoodClaim, User, Event } from "../../interfaces/admin"
+import { FoodClaim, User, Event, MealSession } from "../../interfaces/admin"
 import { X } from "lucide-react"
 
 // Food Claims Section
@@ -9,6 +9,7 @@ export default function FoodClaimsSection() {
     const [foodClaims, setFoodClaims] = useState<FoodClaim[]>([])
     const [users, setUsers] = useState<User[]>([])
     const [events, setEvents] = useState<Event[]>([])
+    const [mealSessions, setMealSessions] = useState<MealSession[]>([])
     const [loading, setLoading] = useState(false)
     const [selectedClaim, setSelectedClaim] = useState<FoodClaim | null>(null)
 
@@ -46,7 +47,39 @@ export default function FoodClaimsSection() {
             if (res.ok) {
                 const data = await res.json()
                 setEvents(data)
+                return data // Return for chaining if needed
             }
+        } catch (err) {
+            console.error(err)
+        }
+        return []
+    }
+
+    const fetchMealSessions = async (eventsList?: Event[]) => {
+        const token = getToken()
+        if (!token) return
+
+        // Use provided events list or current state (though state might be stale if called immediately after setEvents)
+        // Better to rely on the passed list if this is part of values initialization
+        const targetEvents = eventsList || events
+
+        if (targetEvents.length === 0) return
+
+        try {
+             const allMealSessions: MealSession[] = []
+             for (const event of targetEvents) {
+                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/meal-session/event/${event.id}`, {
+                     headers: {
+                         "Content-Type": "application/json",
+                         Authorization: `Bearer ${token}`,
+                     },
+                 })
+                 if (res.ok) {
+                     const data = await res.json()
+                     allMealSessions.push(...data)
+                 }
+             }
+             setMealSessions(allMealSessions)
         } catch (err) {
             console.error(err)
         }
@@ -75,10 +108,17 @@ export default function FoodClaimsSection() {
         }
     }
 
+    const initData = async () => {
+        setLoading(true)
+        await fetchUsers()
+        const eventsData = await fetchEvents()
+        await fetchMealSessions(eventsData)
+        await fetchFoodClaims()
+        setLoading(false)
+    }
+
     useEffect(() => {
-        fetchUsers()
-        fetchEvents()
-        fetchFoodClaims()
+        initData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -92,15 +132,32 @@ export default function FoodClaimsSection() {
         return event?.name || eventId
     }
 
-    // Group food claims by event
-    const groupedClaims = foodClaims.reduce((acc, claim) => {
+    const getMealSessionDetails = (mealSessionId: string) => {
+        const session = mealSessions.find(ms => ms.id === mealSessionId)
+        if (!session) return "Unknown Session"
+        const time = new Date(session.start_time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        return `${session.meal_type} (${time})`
+    }
+
+    // Group food claims by event, then by meal session
+    type ClaimsBySession = Record<string, FoodClaim[]>
+    type ClaimsByEvent = Record<string, ClaimsBySession>
+
+    const groupedClaims: ClaimsByEvent = foodClaims.reduce((acc, claim) => {
         const eventId = claim.event_id
+        const sessionId = claim.meal_session_id
+
         if (!acc[eventId]) {
-            acc[eventId] = []
+            acc[eventId] = {}
         }
-        acc[eventId].push(claim)
+        
+        if (!acc[eventId][sessionId]) {
+            acc[eventId][sessionId] = []
+        }
+
+        acc[eventId][sessionId].push(claim)
         return acc
-    }, {} as Record<string, FoodClaim[]>)
+    }, {} as ClaimsByEvent)
 
     const handleDelete = async (id: string) => {
         if (!confirm("Are you sure you want to delete this food claim?")) return
@@ -132,45 +189,67 @@ export default function FoodClaimsSection() {
                     <p className="text-gray-500">Loading...</p>
                 </div>
             ) : (
-                <div className="space-y-6">
+                <div className="space-y-8">
                     {foodClaims.length === 0 ? (
                         <div className="text-center py-12 text-gray-400 bg-gray-50 rounded-xl border border-dashed border-gray-200">
                             <p>No food claims found</p>
                         </div>
                     ) : (
-                        Object.entries(groupedClaims).map(([eventId, claims]) => (
+                        Object.entries(groupedClaims).map(([eventId, sessions]) => (
                             <div key={eventId} className="space-y-4">
-                                <h3 className="text-lg sm:text-xl font-bold text-gray-900 border-b border-gray-200 pb-2">
+                                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 border-b-2 border-primary pb-2">
                                     {getEventName(eventId)}
                                 </h3>
-                                <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-                                    <div className="overflow-x-auto">
-                                        <table className="w-full">
-                                            <thead className="bg-gray-50">
-                                                <tr>
-                                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">S.N.</th>
-                                                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Claim Name</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody className="bg-white divide-y divide-gray-200">
-                                                {claims.map((claim, index) => (
-                                                    <tr key={claim.id} className="hover:bg-gray-50 transition-colors">
-                                                        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900">
-                                                            {index + 1}
-                                                        </td>
-                                                        <td className="px-4 py-3 text-sm">
-                                                            <button
-                                                                onClick={() => setSelectedClaim(claim)}
-                                                                className="text-primary hover:text-[#4a3ea3] font-medium transition-colors cursor-pointer"
-                                                            >
-                                                                {getUsername(claim.user_id)}
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <div className="space-y-6">
+                                    {Object.entries(sessions).map(([sessionId, claims]) => (
+                                        <div key={sessionId} className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+                                            <div className="bg-gray-50 px-6 py-3 border-b border-gray-200">
+                                                <h4 className="font-semibold text-gray-800">
+                                                    {getMealSessionDetails(sessionId)}
+                                                </h4>
+                                            </div>
+                                            <div className="overflow-x-auto">
+                                                <table className="w-full">
+                                                    <thead className="bg-white">
+                                                        <tr>
+                                                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">S.N.</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Claimant</th>
+                                                            <th className="px-6 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Time</th>
+                                                            <th className="px-6 py-3 text-right text-xs font-bold text-gray-500 uppercase tracking-wider">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody className="divide-y divide-gray-100">
+                                                        {claims.map((claim, index) => (
+                                                            <tr key={claim.id} className="hover:bg-gray-50 transition-colors">
+                                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                                    {index + 1}
+                                                                </td>
+                                                                <td className="px-6 py-4 text-sm font-medium">
+                                                                    <button
+                                                                        onClick={() => setSelectedClaim(claim)}
+                                                                        className="text-primary hover:text-purple-700 transition-colors cursor-pointer"
+                                                                    >
+                                                                        {getUsername(claim.user_id)}
+                                                                    </button>
+                                                                </td>
+                                                                <td className="px-6 py-4 text-sm text-gray-500">
+                                                                    {new Date(claim.claimed_at).toLocaleTimeString()}
+                                                                </td>
+                                                                <td className="px-6 py-4 text-right text-sm font-medium">
+                                                                     <button
+                                                                        onClick={() => setSelectedClaim(claim)}
+                                                                        className="text-gray-400 hover:text-primary transition-colors mr-3"
+                                                                    >
+                                                                        View
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         ))
@@ -202,8 +281,8 @@ export default function FoodClaimsSection() {
                                     <p className="text-gray-600 mt-1">{getUsername(selectedClaim.user_id)}</p>
                                 </div>
                                 <div>
-                                    <span className="font-medium text-gray-900">Meal Session ID:</span>
-                                    <p className="text-gray-600 mt-1 break-all">{selectedClaim.meal_session_id}</p>
+                                    <span className="font-medium text-gray-900">Meal Session:</span>
+                                    <p className="text-gray-600 mt-1">{getMealSessionDetails(selectedClaim.meal_session_id)}</p>
                                 </div>
                                 <div>
                                     <span className="font-medium text-gray-900">Event:</span>
