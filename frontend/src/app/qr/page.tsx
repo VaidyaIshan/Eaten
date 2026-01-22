@@ -25,7 +25,7 @@ export default function QrPage() {
 
       try {
       
-        const userReq = fetch(`{${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/me`, {
+        const userReq = fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
