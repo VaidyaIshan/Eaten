@@ -25,11 +25,11 @@ export default function QrPage() {
 
       try {
       
-        const userReq = fetch("http://127.0.0.1:8000/Eaten/auth/me", {
+        const userReq = fetch(`{${process.env.NEXT_PUBLIC_API_URL}/Eaten/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const mealReq = fetch(`http://127.0.0.1:8000/Eaten/meal-session/get-all-mealsession`, {
+        const mealReq = fetch(`${process.env.NEXT_PUBLIC_API_URL}/Eaten/meal-session/get-all-mealsession`, {
              headers: { Authorization: `Bearer ${token}` },
         });
 
